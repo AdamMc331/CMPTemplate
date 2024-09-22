@@ -1,0 +1,223 @@
+def renameConfig = [
+        templateName                : "template",
+        templateAppId               : "template.app.id",
+        templateMaterialThemeName   : "TemplateTheme",
+        templateApplicationClassName: "TemplateApp",
+        newPackage                  : "domain.yourname.app",
+        newProjectName              : "Your Project",
+        newMaterialThemeName        : "MyMaterialTheme",
+        newApplicationClassName     : "MyApp",
+        useHiltDependencies         : true,
+        useRoomDependencies         : true,
+        useRetrofitDependencies     : true,
+        usePaparazziDependencies    : true,
+        useRenovateDependencies     : true,
+]
+
+task deleteSetupCode() {
+    def workflowsFolder = "${rootDir}/.github/workflows"
+    def buildscriptsFolder = "${rootDir}/buildscripts"
+    def templateChangeWorkflowFile = "$workflowsFolder/template_change_test.yml"
+    def macosHooksWorkflowFile = "$workflowsFolder/install_git_hooks_macos.yml"
+    def windowsHooksWorkflowFile = "$workflowsFolder/install_git_hooks_windows.yml"
+    def setupGradle = "$buildscriptsFolder/setup.gradle"
+    def renovateFile = "${rootDir}/renovate.json"
+
+    doLast {
+        removeTextFromFile("${rootDir}/build.gradle.kts", "setup.gradle")
+        delete(templateChangeWorkflowFile)
+        delete(macosHooksWorkflowFile)
+        delete(windowsHooksWorkflowFile)
+        delete(setupGradle)
+
+        if (renameConfig.useRenovateDependencies != true) {
+            println("Removing renovate dependencies")
+            delete(renovateFile)
+        }
+    }
+}
+
+task renameAppPackage(type: Copy) {
+    description "Renames the template package in the app module."
+    group null
+
+    def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
+    def startingDirectory = "${rootDir}/app/src/main/java/${renameConfig.templateName}"
+    def endingDirectory = "${rootDir}/app/src/main/java/${newPackageAsDirectory}"
+
+    from(startingDirectory)
+    into(endingDirectory)
+
+    // Replace package statements
+    filter { line ->
+        line.replaceAll(
+                "package ${renameConfig.templateName}",
+                "package ${renameConfig.newPackage}"
+        )
+    }
+
+    // Replace import statements
+    filter { line ->
+        line.replaceAll(
+                "import ${renameConfig.templateName}",
+                "import ${renameConfig.newPackage}"
+        )
+    }
+
+    // Replace Theme references. We can just replace on name,
+    // which covers both imports and function calls.
+    filter { line ->
+        line.replaceAll(
+                "${renameConfig.templateMaterialThemeName}",
+                "${renameConfig.newMaterialThemeName}"
+        )
+    }
+
+    // Replace application class references
+    filter { line ->
+        line.replaceAll(
+                "${renameConfig.templateApplicationClassName}",
+                "${renameConfig.newApplicationClassName}",
+        )
+    }
+
+    rename { fileName ->
+        if (fileName.contains("${renameConfig.templateApplicationClassName}")) {
+            fileName.replace(
+                    "${renameConfig.templateApplicationClassName}",
+                    "${renameConfig.newApplicationClassName}",
+            )
+        } else {
+            fileName
+        }
+    }
+
+    doLast {
+        delete(startingDirectory)
+    }
+}
+
+task replaceTemplateReferences {
+    description "Replaces references to template in various files."
+    group null
+
+    doLast {
+        replaceTextInFile(
+                "${rootDir}/app/src/main/AndroidManifest.xml",
+                "${renameConfig.templateName}.MainActivity",
+                "${renameConfig.newPackage}.MainActivity",
+        )
+
+        replaceTextInFile(
+                "${rootDir}/app/src/main/AndroidManifest.xml",
+                ".${renameConfig.templateApplicationClassName}",
+                ".${renameConfig.newApplicationClassName}",
+        )
+
+        replaceTextInFile(
+                "${rootDir}/app/build.gradle.kts",
+                "namespace = \"${renameConfig.templateName}\"",
+                "namespace = \"${renameConfig.newPackage}\"",
+        )
+
+        replaceTextInFile(
+                "${rootDir}/app/build.gradle.kts",
+                "applicationId = \"${renameConfig.templateAppId}\"",
+                "applicationId = \"${renameConfig.newPackage}\"",
+        )
+
+        replaceTextInFile(
+                "${rootDir}/settings.gradle.kts",
+                "rootProject.name = \"${renameConfig.templateName}\"",
+                "rootProject.name = \"${renameConfig.newProjectName}\"",
+        )
+
+        replaceTextInFile(
+                "${rootDir}/app/src/main/res/values/strings.xml",
+                "<string name=\"app_name\">${renameConfig.templateName}</string>",
+                "<string name=\"app_name\">${renameConfig.newProjectName}</string>",
+        )
+    }
+}
+
+task keepOrRemoveDependencies {
+    description "Keeps or removes certain dependencies defined in renameConfig."
+    group null
+
+    doLast {
+        def filesWithDependencies = [
+                "${rootDir}/build.gradle.kts",
+                "${rootDir}/app/build.gradle.kts",
+                "${rootDir}/gradle/libs.versions.toml",
+                "${rootDir}/app/src/main/java/template/TemplateApp.kt",
+        ]
+
+        filesWithDependencies.each { fileName ->
+            if (renameConfig.useHiltDependencies != true) {
+                println("Removing hilt dependencies")
+                removeTextFromFile(fileName, "hilt")
+                removeTextFromFile(fileName, "Hilt")
+            }
+
+            if (renameConfig.useRoomDependencies != true) {
+                println("Removing room dependencies")
+                removeTextFromFile(fileName, "room")
+            }
+
+            if (renameConfig.useRetrofitDependencies != true) {
+                println("Removing retrofit dependencies")
+                removeTextFromFile(fileName, "retrofit")
+                removeTextFromFile(fileName, "moshi")
+            }
+
+            if (renameConfig.usePaparazziDependencies != true) {
+                println("Removing paparazzi dependencies")
+                removeTextFromFile(fileName, "paparazzi")
+            }
+        }
+    }
+}
+
+task renameTemplate {
+    description "Runs all of the necessary template setup tasks based on the renameConfig."
+    group "Template Setup"
+
+    dependsOn(
+            keepOrRemoveDependencies,
+            renameAppPackage,
+            replaceTemplateReferences,
+            deleteSetupCode,
+    )
+
+    doLast {
+        exec {
+            // After all setup changes happen, run a `git add` so
+            // folks can just immediately commit and push if they wish.
+            commandLine "git", "add", "${rootDir}/."
+        }
+    }
+}
+
+/**
+ * Replaces all instances of [text] in a given [fileName].
+ */
+static def replaceTextInFile(fileName, originalText, newText) {
+    def file = new File(fileName)
+
+    file.text = file.text.replaceAll(originalText, newText)
+}
+
+/**
+ * Removes all lines from the given fileName that contain some supplied text.
+ */
+static def removeTextFromFile(fileName, text) {
+    def file = new File(fileName)
+    List fileLines = file.readLines()
+    file.text = ""
+    fileLines.each { line ->
+        if (!line.contains(text)) {
+            file.append(line)
+            file.append("\n")
+        }
+    }
+}
