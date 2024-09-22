@@ -97,6 +97,186 @@ task renameAppPackage(type: Copy) {
     }
 }
 
+task renameSharedAndroidPackage(type: Copy) {
+    description "Renames the template package in the shared/androidMain module."
+    group null
+
+    def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
+    def startingDirectory = "${rootDir}/shared/src/androidMain/kotlin/${renameConfig.templateName}"
+    def endingDirectory = "${rootDir}/shared/src/androidMain/kotlin/${newPackageAsDirectory}"
+
+    from(startingDirectory)
+    into(endingDirectory)
+
+    // Replace package statements
+    filter { line ->
+        line.replaceAll(
+                "package ${renameConfig.templateName}",
+                "package ${renameConfig.newPackage}"
+        )
+    }
+
+    // Replace import statements
+    filter { line ->
+        line.replaceAll(
+                "import ${renameConfig.templateName}",
+                "import ${renameConfig.newPackage}"
+        )
+    }
+
+    // Replace Theme references. We can just replace on name,
+    // which covers both imports and function calls.
+    filter { line ->
+        line.replaceAll(
+                "${renameConfig.templateMaterialThemeName}",
+                "${renameConfig.newMaterialThemeName}"
+        )
+    }
+
+    // Replace application class references
+    filter { line ->
+        line.replaceAll(
+                "${renameConfig.templateApplicationClassName}",
+                "${renameConfig.newApplicationClassName}",
+        )
+    }
+
+    rename { fileName ->
+        if (fileName.contains("${renameConfig.templateApplicationClassName}")) {
+            fileName.replace(
+                    "${renameConfig.templateApplicationClassName}",
+                    "${renameConfig.newApplicationClassName}",
+            )
+        } else {
+            fileName
+        }
+    }
+
+    doLast {
+        delete(startingDirectory)
+    }
+}
+
+task renameSharedIOSPackage(type: Copy) {
+    description "Renames the template package in the shared/iosMain module."
+    group null
+
+    def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
+    def startingDirectory = "${rootDir}/shared/src/iosMain/kotlin/${renameConfig.templateName}"
+    def endingDirectory = "${rootDir}/shared/src/iosMain/kotlin/${newPackageAsDirectory}"
+
+    from(startingDirectory)
+    into(endingDirectory)
+
+    // Replace package statements
+    filter { line ->
+        line.replaceAll(
+                "package ${renameConfig.templateName}",
+                "package ${renameConfig.newPackage}"
+        )
+    }
+
+    // Replace import statements
+    filter { line ->
+        line.replaceAll(
+                "import ${renameConfig.templateName}",
+                "import ${renameConfig.newPackage}"
+        )
+    }
+
+    // Replace Theme references. We can just replace on name,
+    // which covers both imports and function calls.
+    filter { line ->
+        line.replaceAll(
+                "${renameConfig.templateMaterialThemeName}",
+                "${renameConfig.newMaterialThemeName}"
+        )
+    }
+
+    // Replace application class references
+    filter { line ->
+        line.replaceAll(
+                "${renameConfig.templateApplicationClassName}",
+                "${renameConfig.newApplicationClassName}",
+        )
+    }
+
+    rename { fileName ->
+        if (fileName.contains("${renameConfig.templateApplicationClassName}")) {
+            fileName.replace(
+                    "${renameConfig.templateApplicationClassName}",
+                    "${renameConfig.newApplicationClassName}",
+            )
+        } else {
+            fileName
+        }
+    }
+
+    doLast {
+        delete(startingDirectory)
+    }
+}
+
+task renameSharedCommonPackage(type: Copy) {
+    description "Renames the template package in the shared/commonMain module."
+    group null
+
+    def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
+    def startingDirectory = "${rootDir}/shared/src/commonMain/kotlin/${renameConfig.templateName}"
+    def endingDirectory = "${rootDir}/shared/src/commonMain/kotlin/${newPackageAsDirectory}"
+
+    from(startingDirectory)
+    into(endingDirectory)
+
+    // Replace package statements
+    filter { line ->
+        line.replaceAll(
+                "package ${renameConfig.templateName}",
+                "package ${renameConfig.newPackage}"
+        )
+    }
+
+    // Replace import statements
+    filter { line ->
+        line.replaceAll(
+                "import ${renameConfig.templateName}",
+                "import ${renameConfig.newPackage}"
+        )
+    }
+
+    // Replace Theme references. We can just replace on name,
+    // which covers both imports and function calls.
+    filter { line ->
+        line.replaceAll(
+                "${renameConfig.templateMaterialThemeName}",
+                "${renameConfig.newMaterialThemeName}"
+        )
+    }
+
+    // Replace application class references
+    filter { line ->
+        line.replaceAll(
+                "${renameConfig.templateApplicationClassName}",
+                "${renameConfig.newApplicationClassName}",
+        )
+    }
+
+    rename { fileName ->
+        if (fileName.contains("${renameConfig.templateApplicationClassName}")) {
+            fileName.replace(
+                    "${renameConfig.templateApplicationClassName}",
+                    "${renameConfig.newApplicationClassName}",
+            )
+        } else {
+            fileName
+        }
+    }
+
+    doLast {
+        delete(startingDirectory)
+    }
+}
+
 task replaceTemplateReferences {
     description "Replaces references to template in various files."
     group null
@@ -185,6 +365,9 @@ task renameTemplate {
     dependsOn(
             keepOrRemoveDependencies,
             renameAppPackage,
+            renameSharedAndroidPackage,
+            renameSharedIOSPackage,
+            renameSharedCommonPackage,
             replaceTemplateReferences,
             deleteSetupCode,
     )
