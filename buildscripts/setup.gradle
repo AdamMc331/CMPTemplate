@@ -102,8 +102,8 @@ task renameSharedAndroidPackage(type: Copy) {
     group null
 
     def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
-    def startingDirectory = "${rootDir}/shared/src/androidMain/kotlin/${renameConfig.templateName}"
-    def endingDirectory = "${rootDir}/shared/src/androidMain/kotlin/${newPackageAsDirectory}"
+    def startingDirectory = "${rootDir}/shared/src/androidMain/kotlin/${renameConfig.templateName}/shared"
+    def endingDirectory = "${rootDir}/shared/src/androidMain/kotlin/${newPackageAsDirectory}/shared"
 
     from(startingDirectory)
     into(endingDirectory)
@@ -162,8 +162,8 @@ task renameSharedIOSPackage(type: Copy) {
     group null
 
     def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
-    def startingDirectory = "${rootDir}/shared/src/iosMain/kotlin/${renameConfig.templateName}"
-    def endingDirectory = "${rootDir}/shared/src/iosMain/kotlin/${newPackageAsDirectory}"
+    def startingDirectory = "${rootDir}/shared/src/iosMain/kotlin/${renameConfig.templateName}/shared"
+    def endingDirectory = "${rootDir}/shared/src/iosMain/kotlin/${newPackageAsDirectory}/shared"
 
     from(startingDirectory)
     into(endingDirectory)
@@ -222,8 +222,8 @@ task renameSharedCommonPackage(type: Copy) {
     group null
 
     def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
-    def startingDirectory = "${rootDir}/shared/src/commonMain/kotlin/${renameConfig.templateName}"
-    def endingDirectory = "${rootDir}/shared/src/commonMain/kotlin/${newPackageAsDirectory}"
+    def startingDirectory = "${rootDir}/shared/src/commonMain/kotlin/${renameConfig.templateName}/shared"
+    def endingDirectory = "${rootDir}/shared/src/commonMain/kotlin/${newPackageAsDirectory}/shared"
 
     from(startingDirectory)
     into(endingDirectory)
@@ -320,14 +320,14 @@ task replaceTemplateReferences {
 
         replaceTextInFile(
                 "${rootDir}/shared/build.gradle.kts",
-                "namespace = \"${renameConfig.templateName}\"",
-                "namespace = \"${renameConfig.newPackage}\"",
+                "namespace = \"${renameConfig.templateName}\".shared",
+                "namespace = \"${renameConfig.newPackage}\".shared",
         )
 
         replaceTextInFile(
                 "${rootDir}/shared/build.gradle.kts",
-                "packageOfResClass = \"${renameConfig.templateName}\"",
-                "packageOfResClass = \"${renameConfig.newPackage}\"",
+                "packageOfResClass = \"${renameConfig.templateName}\".shared",
+                "packageOfResClass = \"${renameConfig.newPackage}\".shared",
         )
     }
 }
