@@ -60,6 +60,7 @@ dependencies {
     kspAndroidTest(libs.hilt.android.compiler)
 
     implementation(platform(libs.compose.bom))
+    implementation(project(":shared"))
     implementation(libs.android.material)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
