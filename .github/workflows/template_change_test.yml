@@ -1,0 +1,51 @@
+# THIS ACTION IS FOR VALIDATION WITHIN TEMPLATE REPO, AND WILL BE
+# REMOVED UPON RUNNING RENAMETEMPLATE GRADLE TASK.
+
+name: Rename Template
+
+on: pull_request
+
+jobs:
+  rename-template:
+    strategy:
+      matrix:
+        keepCustomizableDependencies: [true, false]
+
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set useHiltDependencies
+        run: |
+          sed -i '' 's/useHiltDependencies.* : true/useHiltDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
+
+      - name: Set useRoomDependencies
+        run: |
+          sed -i '' 's/useRoomDependencies.* : true/useRoomDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
+
+      - name: Set useRetrofitDependencies
+        run: |
+          sed -i '' 's/useRetrofitDependencies.* : true/useRetrofitDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
+
+      - name: Set usePaparazziDependencies
+        run: |
+          sed -i '' 's/usePaparazziDependencies.* : true/usePaparazziDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
+
+      - name: Set useRenovateDependencies
+        run: |
+          sed -i '' 's/useRenovateDependencies.* : true/useRenovateDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+
+      - name: Rename
+        run: ./gradlew renameTemplate
+
+      - name: Build
+        run: ./gradlew build
