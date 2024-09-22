@@ -317,6 +317,12 @@ task replaceTemplateReferences {
                 "<string name=\"app_name\">${renameConfig.templateName}</string>",
                 "<string name=\"app_name\">${renameConfig.newProjectName}</string>",
         )
+
+        replaceTextInFile(
+                "${rootDir}/shared/build.gradle.kts",
+                "namespace = \"${renameConfig.templateName}\"",
+                "namespace = \"${renameConfig.newPackage}\"",
+        )
     }
 }
 
