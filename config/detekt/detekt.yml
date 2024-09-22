@@ -291,6 +291,7 @@ naming:
   MatchingDeclarationName:
     active: true
     mustBeFirst: true
+    excludes: ['**.android.kt', '**.ios.kt']
   MemberNameEqualsClassName:
     active: true
     ignoreOverridden: true
