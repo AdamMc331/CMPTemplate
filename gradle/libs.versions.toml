@@ -1,5 +1,6 @@
 [versions]
 activityCompose = "1.9.2"
+agp = "8.6.1"
 androidxTest = "1.2.1"
 appCompat = "1.7.0"
 compileSdk = "34"
@@ -10,6 +11,7 @@ gradle = "8.6.1"
 gradleVersionsPlugin = "0.51.0"
 hilt = "2.52"
 junit = "4.13.2"
+kmpCompose = "1.6.11"
 kotlin = "2.0.20"
 kotlinter = "4.4.1"
 ksp = "2.0.20-1.0.25"
@@ -59,4 +61,9 @@ square-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "r
 square-retrofit-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit"}
 
 [plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+cash-paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.compose", version.ref = "kmpCompose" }
+kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }
