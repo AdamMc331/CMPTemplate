@@ -320,14 +320,14 @@ task replaceTemplateReferences {
 
         replaceTextInFile(
                 "${rootDir}/shared/build.gradle.kts",
-                "namespace = \"${renameConfig.templateName}\".shared",
-                "namespace = \"${renameConfig.newPackage}\".shared",
+                "namespace = \"${renameConfig.templateName}.shared\"",
+                "namespace = \"${renameConfig.newPackage}.shared\"",
         )
 
         replaceTextInFile(
                 "${rootDir}/shared/build.gradle.kts",
-                "packageOfResClass = \"${renameConfig.templateName}\".shared",
-                "packageOfResClass = \"${renameConfig.newPackage}\".shared",
+                "packageOfResClass = \"${renameConfig.templateName}.shared\"",
+                "packageOfResClass = \"${renameConfig.newPackage}.shared\"",
         )
     }
 }
