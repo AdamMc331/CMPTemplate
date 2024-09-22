@@ -41,6 +41,12 @@ kotlin {
     }
 }
 
+compose.resources {
+    publicResClass = false
+    packageOfResClass = "template.shared"
+    generateResClass = auto
+}
+
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
