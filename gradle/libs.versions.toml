@@ -1,6 +1,6 @@
 [versions]
 activityCompose = "1.9.2"
-agp = "8.6.1"
+agp = "8.5.0"
 androidxLifecycle = "2.8.2"
 androidxTest = "1.2.1"
 appCompat = "1.7.0"
@@ -8,7 +8,6 @@ compileSdk = "34"
 composeBom = "2024.09.02"
 detektGradlePlugin = "1.23.7"
 espresso = "3.6.1"
-gradle = "8.6.1"
 gradleVersionsPlugin = "0.51.0"
 hilt = "2.52"
 junit = "4.13.2"
@@ -49,7 +48,7 @@ compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
 detekt-gradle-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detektGradlePlugin" }
-gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 gradle-versions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersionsPlugin" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
