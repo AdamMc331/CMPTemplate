@@ -9,7 +9,6 @@ def renameConfig = [
         newMaterialThemeName        : "MyMaterialTheme",
         newApplicationClassName     : "MyApp",
         newIOSName                  : "myIOS",
-        useRoomDependencies         : true,
         usePaparazziDependencies    : true,
         useRenovateDependencies     : true,
 ]
@@ -345,11 +344,6 @@ task keepOrRemoveDependencies {
         ]
 
         filesWithDependencies.each { fileName ->
-            if (renameConfig.useRoomDependencies != true) {
-                println("Removing room dependencies")
-                removeTextFromFile(fileName, "room")
-            }
-
             if (renameConfig.usePaparazziDependencies != true) {
                 println("Removing paparazzi dependencies")
                 removeTextFromFile(fileName, "paparazzi")

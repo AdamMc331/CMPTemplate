@@ -1,10 +1,6 @@
 name: iOS Build
 
-on:
-  push:
-    branches:
-      - development
-  pull_request:
+on: pull_request
 
 jobs:
   ios-build:

@@ -1,10 +1,6 @@
 name: Lint Checks
 
-on:
-  push:
-    branches:
-      - development
-  pull_request:
+on: pull_request
 
 jobs:
   lint-checks:
