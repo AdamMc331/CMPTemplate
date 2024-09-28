@@ -9,7 +9,6 @@ def renameConfig = [
         newApplicationClassName     : "MyApp",
         useHiltDependencies         : true,
         useRoomDependencies         : true,
-        useRetrofitDependencies     : true,
         usePaparazziDependencies    : true,
         useRenovateDependencies     : true,
 ]
@@ -354,12 +353,6 @@ task keepOrRemoveDependencies {
             if (renameConfig.useRoomDependencies != true) {
                 println("Removing room dependencies")
                 removeTextFromFile(fileName, "room")
-            }
-
-            if (renameConfig.useRetrofitDependencies != true) {
-                println("Removing retrofit dependencies")
-                removeTextFromFile(fileName, "retrofit")
-                removeTextFromFile(fileName, "moshi")
             }
 
             if (renameConfig.usePaparazziDependencies != true) {

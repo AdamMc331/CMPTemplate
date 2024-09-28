@@ -55,7 +55,6 @@ android {
 dependencies {
     ksp(libs.androidx.room.compiler)
     ksp(libs.hilt.compiler)
-    ksp(libs.square.moshi.kotlin.codegen)
 
     kspAndroidTest(libs.hilt.android.compiler)
 
@@ -72,9 +71,6 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling)
     implementation(libs.hilt.android)
-    implementation(libs.square.moshi.kotlin)
-    implementation(libs.square.retrofit)
-    implementation(libs.square.retrofit.converter.moshi)
 
     debugImplementation(platform(libs.compose.bom))
     debugImplementation(libs.compose.ui.test.manifest)
