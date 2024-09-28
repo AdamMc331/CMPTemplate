@@ -339,6 +339,7 @@ task keepOrRemoveDependencies {
         def filesWithDependencies = [
                 "${rootDir}/build.gradle.kts",
                 "${rootDir}/app/build.gradle.kts",
+                "${rootDir}/shared/build.gradle.kts",
                 "${rootDir}/gradle/libs.versions.toml",
                 "${rootDir}/app/src/main/java/template/TemplateApp.kt",
         ]
