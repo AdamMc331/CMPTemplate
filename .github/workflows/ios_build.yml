@@ -22,7 +22,7 @@ jobs:
         run: ./gradlew :shared:iosX64Test
 
       - name: Build
-        uses: sersoft-gmbh/xcodebuild-action@v1
+        uses: sersoft-gmbh/xcodebuild-action@v3
         with:
           project: iosApp/templateIOS.xcodeproj
           scheme: templateIOS
