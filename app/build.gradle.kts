@@ -53,7 +53,6 @@ android {
 }
 
 dependencies {
-    ksp(libs.androidx.room.compiler)
     ksp(libs.hilt.compiler)
     ksp(libs.square.moshi.kotlin.codegen)
 
@@ -66,7 +65,6 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.room.runtime)
     implementation(libs.compose.material)
     implementation(libs.compose.material.icons.extended)
     implementation(libs.compose.ui)
@@ -80,8 +78,6 @@ dependencies {
     debugImplementation(libs.compose.ui.test.manifest)
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.square.leakcanary)
-
-    annotationProcessor(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
 
