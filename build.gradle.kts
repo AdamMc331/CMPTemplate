@@ -20,7 +20,6 @@ buildscript {
 
 plugins {
     id("app.cash.paparazzi").version(libs.versions.paparazzi).apply(false)
-    id("com.google.dagger.hilt.android").version(libs.versions.hilt).apply(false)
     id("com.google.devtools.ksp").version(libs.versions.ksp).apply(false)
     id("com.squareup.sort-dependencies").version(libs.versions.sortDependencies).apply(false)
     id("io.gitlab.arturbosch.detekt").version(libs.versions.detektGradlePlugin)

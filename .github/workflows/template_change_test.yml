@@ -15,18 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set useHiltDependencies
-        run: |
-          sed -i '' 's/useHiltDependencies.* : true/useHiltDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
-
-      - name: Set useRoomDependencies
-        run: |
-          sed -i '' 's/useRoomDependencies.* : true/useRoomDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
-
-      - name: Set useRetrofitDependencies
-        run: |
-          sed -i '' 's/useRetrofitDependencies.* : true/useRetrofitDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
-
       - name: Set usePaparazziDependencies
         run: |
           sed -i '' 's/usePaparazziDependencies.* : true/usePaparazziDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
@@ -50,5 +38,18 @@ jobs:
       - name: Clean
         run: ./gradlew clean
 
-      - name: Build
-        run: ./gradlew build
+      # Only build enough to verify compilation: https://touchlab.co/touchlab-build-only-what-you-need#ci
+      - name: Android Build
+        run: ./gradlew assembleDebug
+
+      - name: IOS Build
+        uses: sersoft-gmbh/xcodebuild-action@v3
+        with:
+          project: iosApp/myIOS.xcodeproj
+          scheme: myIOS
+          destination: name=iPhone 8
+          sdk: iphoneos
+          configuration: Debug
+          action: build
+          use-xcpretty: false
+          build-settings: CODE_SIGN_IDENTITY= CODE_SIGNING_REQUIRED=NO
