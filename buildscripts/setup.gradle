@@ -372,7 +372,7 @@ task keepOrRemoveDependencies {
     }
 }
 
-task renameIOSUITest(type: Copy) {
+task renameIOSUITests(type: Copy) {
     description "Renames the IOSUITests directory."
     group null
 
@@ -398,14 +398,94 @@ task renameIOSUITest(type: Copy) {
     }
 }
 
-task renameiOSApp {
+task renameIOSTests(type: Copy) {
+    description "Renames the IOSTests directory."
+    group null
+
+    def startingDirectory = "${rootDir}/iosApp/${renameConfig.templateIOSName}Tests"
+    def endingDirectory = "${rootDir}/iosApp/${renameConfig.newIOSName}Tests"
+
+    from(startingDirectory)
+    into(endingDirectory)
+
+    filter { line ->
+        line.replaceAll(
+                renameConfig.templateIOSName,
+                renameConfig.newIOSName
+        )
+    }
+
+    rename { filename ->
+        filename.replace renameConfig.templateIOSName, renameConfig.newIOSName
+    }
+
+    doLast {
+        delete(startingDirectory)
+    }
+}
+
+task renameIOSFolder(type: Copy) {
+    description "Renames the IOS Content folder."
+    group null
+
+    def startingDirectory = "${rootDir}/iosApp/${renameConfig.templateIOSName}"
+    def endingDirectory = "${rootDir}/iosApp/${renameConfig.newIOSName}"
+
+    from(startingDirectory)
+    into(endingDirectory)
+
+    filter { line ->
+        line.replaceAll(
+                renameConfig.templateIOSName,
+                renameConfig.newIOSName
+        )
+    }
+
+    rename { filename ->
+        filename.replace renameConfig.templateIOSName, renameConfig.newIOSName
+    }
+
+    doLast {
+        delete(startingDirectory)
+    }
+}
+
+task renameXcodeproject(type: Copy) {
+    description "Renames the IOS xcodeproject folder."
+    group null
+
+    def startingDirectory = "${rootDir}/iosApp/${renameConfig.templateIOSName}.xcodeproj"
+    def endingDirectory = "${rootDir}/iosApp/${renameConfig.newIOSName}.xcodeproj"
+
+    from(startingDirectory)
+    into(endingDirectory)
+
+    filter { line ->
+        line.replaceAll(
+                renameConfig.templateIOSName,
+                renameConfig.newIOSName
+        )
+    }
+
+    rename { filename ->
+        filename.replace renameConfig.templateIOSName, renameConfig.newIOSName
+    }
+
+    doLast {
+        delete(startingDirectory)
+    }
+}
+
+task renameIOSApp {
     description "Rename the iOS application based on the renameConfig."
     group "Template Setup"
 
-    // TODO: Rename templateIOSUITests package and files
-    // TODO: Rename templateIOSTests package and files
-    // TODO: Rename templateIOS package and files
-    // TODO: Rename templateIOS.xcodeproj package and files
+    dependsOn(
+            renameIOSUITests,
+            renameIOSTests,
+            renameIOSFolder,
+            renameXcodeproject,
+    )
 }
 
 task renameTemplate {
@@ -419,6 +499,7 @@ task renameTemplate {
             renameSharedIOSPackage,
             renameSharedCommonPackage,
             replaceTemplateReferences,
+            renameIOSApp,
             deleteSetupCode,
     )
 
