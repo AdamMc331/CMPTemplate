@@ -53,7 +53,6 @@ android {
 
 dependencies {
     ksp(libs.androidx.room.compiler)
-    ksp(libs.square.moshi.kotlin.codegen)
 
     implementation(platform(libs.compose.bom))
     implementation(project(":shared"))
@@ -67,9 +66,6 @@ dependencies {
     implementation(libs.compose.material.icons.extended)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling)
-    implementation(libs.square.moshi.kotlin)
-    implementation(libs.square.retrofit)
-    implementation(libs.square.retrofit.converter.moshi)
 
     debugImplementation(platform(libs.compose.bom))
     debugImplementation(libs.compose.ui.test.manifest)
