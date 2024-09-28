@@ -46,5 +46,6 @@ jobs:
       - name: Clean
         run: ./gradlew clean
 
+      # Only build enough to verify compilation: https://touchlab.co/touchlab-build-only-what-you-need#ci
       - name: Build
-        run: ./gradlew build
+        run: ./gradlew assembleDebug linkDebugFrameworkIosSimulatorArm64
