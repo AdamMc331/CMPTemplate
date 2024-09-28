@@ -1,4 +1,4 @@
-:construction: <h1> UNDER CONSTRUCTION </h1> :construction:
+:construction: <h2> UNDER CONSTRUCTION </h2> :construction:
 
 This is an in progress template repo for a Compose Multiplatform application. The README will be updated last, so if you are reading this, you are using the template at your own risk.
 
