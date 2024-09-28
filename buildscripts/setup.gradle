@@ -7,7 +7,6 @@ def renameConfig = [
         newProjectName              : "Your Project",
         newMaterialThemeName        : "MyMaterialTheme",
         newApplicationClassName     : "MyApp",
-        useHiltDependencies         : true,
         useRetrofitDependencies     : true,
         usePaparazziDependencies    : true,
         useRenovateDependencies     : true,
@@ -344,12 +343,6 @@ task keepOrRemoveDependencies {
         ]
 
         filesWithDependencies.each { fileName ->
-            if (renameConfig.useHiltDependencies != true) {
-                println("Removing hilt dependencies")
-                removeTextFromFile(fileName, "hilt")
-                removeTextFromFile(fileName, "Hilt")
-            }
-
             if (renameConfig.useRetrofitDependencies != true) {
                 println("Removing retrofit dependencies")
                 removeTextFromFile(fileName, "retrofit")

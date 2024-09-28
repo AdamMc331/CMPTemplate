@@ -1,3 +1,7 @@
+:construction: <h2> UNDER CONSTRUCTION </h2> :construction:
+
+This is an in progress template repo for a Compose Multiplatform application. The README will be updated last, so if you are reading this, you are using the template at your own risk.
+
 # Android App Template
 
 This is a GitHub template repository intended to kickstart development on an Android application. This project comes set with a handful of tools that [Adam](https://github.com/AdamMc331) finds important and relevant to every project. If you think something is missing, or feel strongly that a setup should be changed, please submit an [Issue](https://github.com/AdamMc331/AndroidAppTemplate/issues/new).
@@ -41,7 +45,6 @@ The dependencies in the template include:
 * [Gradle Versions Plugin](/documentation/VersionsPlugin.md) for checking all dependencies for new versions.
 * [GitHub Actions](/documentation/GitHubActions.md) for running continuous integration and ensuring code quality with every PR.
 * [LeakCanary](https://square.github.io/leakcanary/) for detecting memory leaks.
-* [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) dependencies, which can be removed via setup.gradle if necessary.
 * [Paparazzi](https://github.com/cashapp/paparazzi) dependncy, which can be removed via setup.gradle if necessary.
 
 ### Danger

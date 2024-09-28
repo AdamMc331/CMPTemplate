@@ -15,10 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set useHiltDependencies
-        run: |
-          sed -i '' 's/useHiltDependencies.* : true/useHiltDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
-
       - name: Set useRetrofitDependencies
         run: |
           sed -i '' 's/useRetrofitDependencies.* : true/useRetrofitDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
@@ -46,5 +42,6 @@ jobs:
       - name: Clean
         run: ./gradlew clean
 
+      # Only build enough to verify compilation: https://touchlab.co/touchlab-build-only-what-you-need#ci
       - name: Build
-        run: ./gradlew build
+        run: ./gradlew assembleDebug linkDebugFrameworkIosSimulatorArm64

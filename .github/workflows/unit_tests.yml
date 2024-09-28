@@ -1,4 +1,4 @@
-name: Android Build
+name: Unit Tests
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  android-build:
+  unit-tests:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
@@ -24,7 +24,5 @@ jobs:
           # Only write to the cache for builds on the 'development' branch
           cache-read-only: ${{ github.ref != 'refs/heads/development' }}
 
-      # assembleDebug is used to improve build times by only building
-      # the debug Android artifacts. https://touchlab.co/touchlab-build-only-what-you-need
-      - name: Build Project
-        run: ./gradlew assembleDebug
+      - name: Run Tests
+        run: ./gradlew test
