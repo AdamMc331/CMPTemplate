@@ -3,32 +3,37 @@ package template.shared
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Surface
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import app.cash.paparazzi.Paparazzi
+import template.shared.theme.TemplateTheme
 
 /**
  * This is a helper function that renders all of our content inside a box that takes up max space,
  * and also wraps it around our design system theme.
  */
 fun Paparazzi.snapshotScreen(
-    useDarkTheme: Boolean,
+    darkTheme: Boolean,
     screenPaddingDp: Int = 16,
     content: @Composable () -> Unit,
 ) {
     this.snapshot {
-        Surface(
-            modifier = Modifier
-                .fillMaxSize(),
+        TemplateTheme(
+            darkTheme = darkTheme,
         ) {
-            Box(
+            Surface(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(screenPaddingDp.dp),
+                    .fillMaxSize(),
             ) {
-                content()
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(screenPaddingDp.dp),
+                ) {
+                    content()
+                }
             }
         }
     }
