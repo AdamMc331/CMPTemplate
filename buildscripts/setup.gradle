@@ -376,8 +376,8 @@ task renameIOSUITest(type: Copy) {
     description "Renames the IOSUITests directory."
     group null
 
-    def startingDirectory = "${rootDir}/${renameConfig.templateIOSName}UITests"
-    def endingDirectory = "${rootDir}/${renameConfig.newIOSName}UITests"
+    def startingDirectory = "${rootDir}/iosApp/${renameConfig.templateIOSName}UITests"
+    def endingDirectory = "${rootDir}/iosApp/${renameConfig.newIOSName}UITests"
 
     from(startingDirectory)
     into(endingDirectory)
@@ -391,6 +391,10 @@ task renameIOSUITest(type: Copy) {
 
     rename { filename ->
         filename.replace renameConfig.templateIOSName, renameConfig.newIOSName
+    }
+
+    doLast {
+        delete(startingDirectory)
     }
 }
 
