@@ -15,10 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set useHiltDependencies
-        run: |
-          sed -i '' 's/useHiltDependencies.* : true/useHiltDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
-
       - name: Set useRoomDependencies
         run: |
           sed -i '' 's/useRoomDependencies.* : true/useRoomDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
