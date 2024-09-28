@@ -348,6 +348,8 @@ task keepOrRemoveDependencies {
             if (renameConfig.usePaparazziDependencies != true) {
                 println("Removing paparazzi dependencies")
                 removeTextFromFile(fileName, "paparazzi")
+
+                delete("${rootDir}/shared/src/test/kotlin/template/shared/PaparazziUtils.kt")
             }
         }
     }
