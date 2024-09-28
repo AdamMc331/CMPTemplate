@@ -7,11 +7,7 @@
 
 #name: Android UI Tests
 #
-#on:
-#  push:
-#    branches:
-#      - development
-#  pull_request:
+# on: pull_request
 #
 #jobs:
 #  android-test:
