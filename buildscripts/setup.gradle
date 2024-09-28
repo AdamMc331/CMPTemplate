@@ -3,10 +3,12 @@ def renameConfig = [
         templateAppId               : "template.app.id",
         templateMaterialThemeName   : "TemplateTheme",
         templateApplicationClassName: "TemplateApp",
+        templateIOSName             : "templateIOS",
         newPackage                  : "domain.yourname.app",
         newProjectName              : "Your Project",
         newMaterialThemeName        : "MyMaterialTheme",
         newApplicationClassName     : "MyApp",
+        newIOSName                  : "myIOS",
         useHiltDependencies         : true,
         useRoomDependencies         : true,
         useRetrofitDependencies     : true,
@@ -368,6 +370,38 @@ task keepOrRemoveDependencies {
             }
         }
     }
+}
+
+task renameIOSUITest(type: Copy) {
+    description "Renames the IOSUITests directory."
+    group null
+
+    def startingDirectory = "${rootDir}/${renameConfig.templateIOSName}UITests"
+    def endingDirectory = "${rootDir}/${renameConfig.newIOSName}UITests"
+
+    from(startingDirectory)
+    into(endingDirectory)
+
+    filter { line ->
+        line.replaceAll(
+                renameConfig.templateIOSName,
+                renameConfig.newIOSName
+        )
+    }
+
+    rename { filename ->
+        filename.replace renameConfig.templateIOSName, renameConfig.newIOSName
+    }
+}
+
+task renameiOSApp {
+    description "Rename the iOS application based on the renameConfig."
+    group "Template Setup"
+
+    // TODO: Rename templateIOSUITests package and files
+    // TODO: Rename templateIOSTests package and files
+    // TODO: Rename templateIOS package and files
+    // TODO: Rename templateIOS.xcodeproj package and files
 }
 
 task renameTemplate {
