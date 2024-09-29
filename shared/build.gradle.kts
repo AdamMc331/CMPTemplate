@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("multiplatform")
+    id("app.cash.paparazzi")
     id("com.android.library")
     alias(libs.plugins.cash.sqldelight)
     alias(libs.plugins.compose.compiler)
@@ -48,6 +49,10 @@ kotlin {
 
         iosMain.dependencies {
             implementation(libs.cash.sqldelight.native.driver)
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
         }
     }
 }
