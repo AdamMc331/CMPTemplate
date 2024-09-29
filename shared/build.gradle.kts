@@ -2,12 +2,11 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("multiplatform")
-    id("app.cash.paparazzi")
-    id("com.android.library")
-    alias(libs.plugins.cash.sqldelight)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.cash.paparazzi)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.multiplatform)
 }
 
 kotlin {

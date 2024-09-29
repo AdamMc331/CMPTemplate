@@ -56,10 +56,16 @@ cash-sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref 
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+benmanes-versions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersionsPlugin" }
 cash-paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 cash-sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 com-android-library = { id = "com.android.library", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.compose", version.ref = "kmpCompose" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }
+google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+square-sortDependencies = { id = "com.squareup.sort-dependencies", version.ref = "sortDependencies" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektGradlePlugin" }
