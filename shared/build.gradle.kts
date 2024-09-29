@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("multiplatform")
+    id("app.cash.sqldelight")
     id("com.android.library")
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.compose)

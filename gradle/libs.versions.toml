@@ -21,6 +21,7 @@ material = "1.12.0"
 minSdk = "21"
 paparazzi = "1.3.4"
 sortDependencies = "0.8"
+sqldelight = "2.0.2"
 
 [libraries]
 android-material = { module = "com.google.android.material:material", version.ref = "material" }
@@ -47,6 +48,13 @@ gradle-versions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 square-leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
+square-sqldelight-android-driver = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
+square-sqldelight-coroutines = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+square-sqldelight-native-driver = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqldelight" }
+square-sqldelight-plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqldelight" }
+square-sqldelight-runtime = { module = "com.squareup.sqldelight:runtime", version.ref = "sqldelight" }
+square-sqldelight-sqlite-driver = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
