@@ -20,11 +20,11 @@ buildscript {
 
 plugins {
     id("app.cash.paparazzi").version(libs.versions.paparazzi).apply(false)
-    id("app.cash.sqldelight").version(libs.versions.sqldelight).apply(false)
     id("com.google.devtools.ksp").version(libs.versions.ksp).apply(false)
     id("com.squareup.sort-dependencies").version(libs.versions.sortDependencies).apply(false)
     id("io.gitlab.arturbosch.detekt").version(libs.versions.detektGradlePlugin)
     id("org.jmailen.kotlinter").version(libs.versions.kotlinter).apply(false)
+    alias(libs.plugins.cash.sqldelight).apply(false)
     alias(libs.plugins.compose.compiler).apply(false)
 }
 
