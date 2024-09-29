@@ -11,6 +11,7 @@ def renameConfig = [
         newIOSName                  : "myIOS",
         usePaparazziDependencies    : true,
         useRenovateDependencies     : true,
+        useSqldelightDependencies   : true,
 ]
 
 task deleteSetupCode() {
@@ -391,6 +392,11 @@ task keepOrRemoveDependencies {
                 removeTextFromFile(fileName, "paparazzi")
 
                 delete("${rootDir}/shared/src/test/kotlin/template/shared/PaparazziUtils.kt")
+            }
+
+            if (renameConfig.useSqldelightDependencies != true) {
+                println("Removing sqldelight dependencies")
+                removeTextFromFile(fileName, "sqldelight")
             }
         }
     }

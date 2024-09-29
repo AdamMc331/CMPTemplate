@@ -38,6 +38,16 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.cash.sqldelight.coroutines)
+            implementation(libs.cash.sqldelight.runtime)
+        }
+
+        androidMain.dependencies {
+            implementation(libs.cash.sqldelight.android.driver)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.cash.sqldelight.native.driver)
         }
 
         commonTest.dependencies {
