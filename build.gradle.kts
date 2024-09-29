@@ -12,7 +12,6 @@ buildscript {
         classpath(libs.gradle)
         classpath(libs.gradle.versions.plugin)
         classpath(libs.kotlin.gradle.plugin)
-        classpath(libs.square.sqldelight.plugin)
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -21,6 +20,7 @@ buildscript {
 
 plugins {
     id("app.cash.paparazzi").version(libs.versions.paparazzi).apply(false)
+    id("app.cash.sqldelight").version(libs.versions.sqldelight).apply(false)
     id("com.google.devtools.ksp").version(libs.versions.ksp).apply(false)
     id("com.squareup.sort-dependencies").version(libs.versions.sortDependencies).apply(false)
     id("io.gitlab.arturbosch.detekt").version(libs.versions.detektGradlePlugin)
