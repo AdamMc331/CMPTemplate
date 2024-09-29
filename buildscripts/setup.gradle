@@ -12,6 +12,7 @@ def renameConfig = [
         usePaparazziDependencies    : true,
         useRenovateDependencies     : true,
         useSqldelightDependencies   : true,
+        useMultiplatformSettings    : true,
 ]
 
 task deleteSetupCode() {
@@ -397,6 +398,13 @@ task keepOrRemoveDependencies {
             if (renameConfig.useSqldelightDependencies != true) {
                 println("Removing sqldelight dependencies")
                 removeTextFromFile(fileName, "sqldelight")
+            }
+
+            if (renameConfig.useMultiplatformSettings != true) {
+                println("Removing multiplatform settings")
+                removeTextFromFile(fileName, "multiplatformSettings")
+                removeTextFromFile(fileName, "multiplatform-settings")
+                removeTextFromFile(fileName, "multiplatform.settings")
             }
         }
     }

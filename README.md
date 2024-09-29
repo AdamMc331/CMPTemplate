@@ -47,6 +47,7 @@ The dependencies in the template include:
 * [LeakCanary](https://square.github.io/leakcanary/) for detecting memory leaks.
 * [Paparazzi](https://github.com/cashapp/paparazzi) for snapshot testing, which can be removed via setup.gradle if necessary.
 * [SQLDelight](https://cashapp.github.io/sqldelight/2.0.2/multiplatform_sqlite/) for local databases, which can be removed via setup.gradle if necessary.
+* [Multiplatform Settings](https://github.com/russhwolf/multiplatform-settings) for local Key-Value storage, which can be removed via setup.gradle if necessary.
 
 ### Danger
 
