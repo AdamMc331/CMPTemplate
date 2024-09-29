@@ -276,6 +276,47 @@ task renameSharedCommonPackage(type: Copy) {
     }
 }
 
+task renameSharedTestPackage(type: Copy) {
+    description "Renames the template package in the shared/test module."
+    group null
+
+    def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
+    def startingDirectory = "${rootDir}/shared/src/test/kotlin/${renameConfig.templateName}/shared"
+    def endingDirectory = "${rootDir}/shared/src/test/kotlin/${newPackageAsDirectory}/shared"
+
+    from(startingDirectory)
+    into(endingDirectory)
+
+    // Replace package statements
+    filter { line ->
+        line.replaceAll(
+                "package ${renameConfig.templateName}",
+                "package ${renameConfig.newPackage}"
+        )
+    }
+
+    // Replace import statements
+    filter { line ->
+        line.replaceAll(
+                "import ${renameConfig.templateName}",
+                "import ${renameConfig.newPackage}"
+        )
+    }
+
+    // Replace Theme references. We can just replace on name,
+    // which covers both imports and function calls.
+    filter { line ->
+        line.replaceAll(
+                "${renameConfig.templateMaterialThemeName}",
+                "${renameConfig.newMaterialThemeName}"
+        )
+    }
+
+    doLast {
+        delete(startingDirectory)
+    }
+}
+
 task replaceTemplateReferences {
     description "Replaces references to template in various files."
     group null
@@ -481,6 +522,7 @@ task renameTemplate {
             renameSharedAndroidPackage,
             renameSharedIOSPackage,
             renameSharedCommonPackage,
+            renameSharedTestPackage,
             replaceTemplateReferences,
             renameIOSApp,
             deleteSetupCode,
