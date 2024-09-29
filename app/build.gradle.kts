@@ -1,5 +1,4 @@
 plugins {
-    id("app.cash.paparazzi")
     id("com.android.application")
     id("com.google.devtools.ksp")
     id("kotlin-android")

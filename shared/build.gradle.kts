@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("multiplatform")
+    id("app.cash.paparazzi")
     id("com.android.library")
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.compose)
@@ -37,6 +38,10 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
         }
     }
 }
