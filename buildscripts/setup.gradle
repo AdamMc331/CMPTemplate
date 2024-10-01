@@ -13,6 +13,7 @@ def renameConfig = [
         useRenovateDependencies     : true,
         useSqldelightDependencies   : true,
         useMultiplatformSettings    : true,
+        useKtor                     : true,
 ]
 
 task deleteSetupCode() {
@@ -405,6 +406,13 @@ task keepOrRemoveDependencies {
                 removeTextFromFile(fileName, "multiplatformSettings")
                 removeTextFromFile(fileName, "multiplatform-settings")
                 removeTextFromFile(fileName, "multiplatform.settings")
+            }
+
+            if (renameConfig.useKtor != true) {
+                println("Removing ktor dependencies")
+                removeTextFromFile(fileName, "ktor")
+                removeTextFromFile(fileName, "kotlinx-serialization")
+                removeTextFromFile(fileName, "kotlinx.serialization")
             }
         }
     }

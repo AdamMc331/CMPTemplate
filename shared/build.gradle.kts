@@ -40,15 +40,19 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.cash.sqldelight.coroutines)
             implementation(libs.cash.sqldelight.runtime)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.ktor.client.core)
             implementation(libs.multiplatform.settings.noArg)
         }
 
         androidMain.dependencies {
             implementation(libs.cash.sqldelight.android.driver)
+            implementation(libs.ktor.client.okhttp)
         }
 
         iosMain.dependencies {
             implementation(libs.cash.sqldelight.native.driver)
+            implementation(libs.ktor.client.darwin)
         }
 
         commonTest.dependencies {
