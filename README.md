@@ -2,9 +2,9 @@
 
 This is an in progress template repo for a Compose Multiplatform application. The README will be updated last, so if you are reading this, you are using the template at your own risk.
 
-# Android App Template
+# Compose Multiplatform Template
 
-This is a GitHub template repository intended to kickstart development on an Android application. This project comes set with a handful of tools that [Adam](https://github.com/AdamMc331) finds important and relevant to every project. If you think something is missing, or feel strongly that a setup should be changed, please submit an [Issue](https://github.com/AdamMc331/AndroidAppTemplate/issues/new).
+This is a GitHub template repository intended to kickstart development on a Compose Multiplatform application. This project comes set with a handful of tools that [Adam](https://github.com/AdamMc331) finds important and relevant to every project. If you think something is missing, or feel strongly that a setup should be changed, please submit an [Issue](https://github.com/AdamMc331/CMPTemplate/issues/new).
 
 ## Why This Template?
 
@@ -16,7 +16,7 @@ This template _is_ opinionated about developer tooling. Dependency management is
 
 If you'd like a video walk through of this template and all it has to offer, you can find that on YouTube. 
 
-https://youtu.be/E0iMUWJn76E
+// TODO: Adam to record walkthrough for this template.
 
 ## Using This Template
 
@@ -26,12 +26,7 @@ To setup this repository to your needs, open the [setup.gradle](buildscripts/set
 and tweak the `renameConfig` block to your needs. After that, you can run the `renameTemplate` 
 gradle task to have the app module's package name and relevant strings replaced.
 
-### Cleanup
-
-After [this PR](https://github.com/AdamMc331/AndroidAppTemplate/pull/44), running the renameTemplate
-task should do all the necessary cleanup like deleting the setup file and test workflow so you can 
-go ahead and commit the renamed files and be on your way. If you encounter any problems with the setup
-workflow, please report a new [issue](https://github.com/AdamMc331/AndroidAppTemplate/issues).
+In addition, it will clean up the relevant setup files and workflows that are specific to this template, it should not require any manual deletion work on your part.
 
 ## What's Included
 
@@ -48,6 +43,7 @@ The dependencies in the template include:
 * [Paparazzi](https://github.com/cashapp/paparazzi) for snapshot testing, which can be removed via setup.gradle if necessary.
 * [SQLDelight](https://cashapp.github.io/sqldelight/2.0.2/multiplatform_sqlite/) for local databases, which can be removed via setup.gradle if necessary.
 * [Multiplatform Settings](https://github.com/russhwolf/multiplatform-settings) for local Key-Value storage, which can be removed via setup.gradle if necessary.
+* [Ktor](https://ktor.io/docs/client-create-multiplatform-application.html) for networking, which can be removed via setup.gradle if necessary.
 
 ### Danger
 
@@ -75,4 +71,3 @@ subprojects {
 ```
 
 In addition, all of the app module dependencies are defined using a gradle version catalog, found in this [toml](gradle/libs.versions.toml) file.
-
