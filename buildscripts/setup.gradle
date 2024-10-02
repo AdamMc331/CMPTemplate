@@ -522,6 +522,19 @@ task renameXcodeproject(type: Copy) {
     }
 }
 
+task renameIOSBuildWorkflow() {
+    description "Renames the ios_build Github Action workflow."
+    group null
+
+    doLast {
+        replaceTextInFile(
+                "${rootDir}/.github/workflows/ios_build.yml",
+                renameConfig.templateIOSName,
+                renameConfig.newIOSName
+        )
+    }
+}
+
 task renameIOSApp {
     description "Rename the iOS application based on the renameConfig."
     group "Template Setup"
@@ -531,6 +544,7 @@ task renameIOSApp {
             renameIOSTests,
             renameIOSFolder,
             renameXcodeproject,
+            renameIOSBuildWorkflow
     )
 }
 
