@@ -523,12 +523,12 @@ task renameXcodeproject(type: Copy) {
 }
 
 task renameIOSBuildWorkflow() {
-    description "Renames the ios-build Github Action workflow."
+    description "Renames the ios_build Github Action workflow."
     group null
 
     doLast {
         replaceTextInFile(
-                "${rootDir}/.github/workflows/ios-build.yml",
+                "${rootDir}/.github/workflows/ios_build.yml",
                 renameConfig.templateIOSName,
                 renameConfig.newIOSName
         )
