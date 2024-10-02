@@ -41,6 +41,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.cash.sqldelight.coroutines)
             implementation(libs.cash.sqldelight.runtime)
+            implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.multiplatform.settings.noArg)
