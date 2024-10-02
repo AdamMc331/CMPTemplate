@@ -44,8 +44,8 @@ task renameAppPackage(type: Copy) {
     group null
 
     def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
-    def startingDirectory = "${rootDir}/app/src/main/java/${renameConfig.templateName}"
-    def endingDirectory = "${rootDir}/app/src/main/java/${newPackageAsDirectory}"
+    def startingDirectory = "${rootDir}/androidApp/src/main/java/${renameConfig.templateName}"
+    def endingDirectory = "${rootDir}/androidApp/src/main/java/${newPackageAsDirectory}"
 
     from(startingDirectory)
     into(endingDirectory)
@@ -326,25 +326,25 @@ task replaceTemplateReferences {
 
     doLast {
         replaceTextInFile(
-                "${rootDir}/app/src/main/AndroidManifest.xml",
+                "${rootDir}/androidApp/src/main/AndroidManifest.xml",
                 "${renameConfig.templateName}.MainActivity",
                 "${renameConfig.newPackage}.MainActivity",
         )
 
         replaceTextInFile(
-                "${rootDir}/app/src/main/AndroidManifest.xml",
+                "${rootDir}/androidApp/src/main/AndroidManifest.xml",
                 ".${renameConfig.templateApplicationClassName}",
                 ".${renameConfig.newApplicationClassName}",
         )
 
         replaceTextInFile(
-                "${rootDir}/app/build.gradle.kts",
+                "${rootDir}/androidApp/build.gradle.kts",
                 "namespace = \"${renameConfig.templateName}\"",
                 "namespace = \"${renameConfig.newPackage}\"",
         )
 
         replaceTextInFile(
-                "${rootDir}/app/build.gradle.kts",
+                "${rootDir}/androidApp/build.gradle.kts",
                 "applicationId = \"${renameConfig.templateAppId}\"",
                 "applicationId = \"${renameConfig.newPackage}\"",
         )
@@ -356,7 +356,7 @@ task replaceTemplateReferences {
         )
 
         replaceTextInFile(
-                "${rootDir}/app/src/main/res/values/strings.xml",
+                "${rootDir}/androidApp/src/main/res/values/strings.xml",
                 "<string name=\"app_name\">${renameConfig.templateName}</string>",
                 "<string name=\"app_name\">${renameConfig.newProjectName}</string>",
         )
@@ -382,10 +382,10 @@ task keepOrRemoveDependencies {
     doLast {
         def filesWithDependencies = [
                 "${rootDir}/build.gradle.kts",
-                "${rootDir}/app/build.gradle.kts",
+                "${rootDir}/androidApp/build.gradle.kts",
                 "${rootDir}/shared/build.gradle.kts",
                 "${rootDir}/gradle/libs.versions.toml",
-                "${rootDir}/app/src/main/java/template/TemplateApp.kt",
+                "${rootDir}/androidApp/src/main/java/template/TemplateApp.kt",
         ]
 
         filesWithDependencies.each { fileName ->
