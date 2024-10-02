@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "template"
-include(":app")
+include(":androidApp")
 include(":shared")
