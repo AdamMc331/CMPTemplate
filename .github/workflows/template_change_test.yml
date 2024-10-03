@@ -31,6 +31,10 @@ jobs:
         run: |
           sed -i '' 's/useKtor.* : true/useKtor : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
 
+      - name: Set useKoin
+        run: |
+          sed -i '' 's/useKoin.* : true/useKoin : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
+
       - name: Set useRenovateDependencies
         run: |
           sed -i '' 's/useRenovateDependencies.* : true/useRenovateDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
