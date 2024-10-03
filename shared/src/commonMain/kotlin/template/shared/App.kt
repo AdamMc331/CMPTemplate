@@ -5,7 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,46 +16,49 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import template.shared.theme.TemplateTheme
 
 @Preview
 @Composable
 fun App() {
-    MaterialTheme {
+    TemplateTheme {
         var showContent by remember {
             mutableStateOf(false)
         }
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Button(
-                onClick = {
-                    showContent = !showContent
-                },
+        Surface {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth(),
             ) {
-                Text(
-                    text = "Click me!",
-                )
-            }
-
-            AnimatedVisibility(showContent) {
-                val greeting = remember {
-                    Greeting().greet()
+                Button(
+                    onClick = {
+                        showContent = !showContent
+                    },
+                ) {
+                    Text(
+                        text = "Click me!",
+                    )
                 }
 
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                ) {
-                    Image(
-                        painter = painterResource(Res.drawable.compose_multiplatform),
-                        contentDescription = null,
-                    )
-                    Text(
-                        text = "Compose: $greeting",
-                    )
+                AnimatedVisibility(showContent) {
+                    val greeting = remember {
+                        Greeting().greet()
+                    }
+
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                    ) {
+                        Image(
+                            painter = painterResource(Res.drawable.compose_multiplatform),
+                            contentDescription = null,
+                        )
+                        Text(
+                            text = "Compose: $greeting",
+                        )
+                    }
                 }
             }
         }
