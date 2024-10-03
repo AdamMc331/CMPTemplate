@@ -10,5 +10,11 @@ import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 class AndroidDatabaseDriverFactory(
     private val context: Context,
 ) : DatabaseDriverFactory {
-    override fun createDriver(): SqlDriver = AndroidSqliteDriver(TODO("Define AppDatabase.schema"), context, "TODO.db")
+    override fun createDriver(): SqlDriver {
+        return AndroidSqliteDriver(
+            schema = TODO("Define AppDatabase.schema"),
+            context = context,
+            name = "TODO.db",
+        )
+    }
 }

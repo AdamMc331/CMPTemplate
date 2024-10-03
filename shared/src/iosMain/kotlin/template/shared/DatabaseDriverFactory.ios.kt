@@ -7,5 +7,10 @@ import app.cash.sqldelight.driver.native.NativeSqliteDriver
  * Create an instance of a [SqlDriver] for the iOS platform.
  */
 class IOSDatabaseDriverFactory : DatabaseDriverFactory {
-    override fun createDriver(): SqlDriver = NativeSqliteDriver(TODO("Define AppDatabase.schema"), "TODO.db")
+    override fun createDriver(): SqlDriver {
+        return NativeSqliteDriver(
+            schema = TODO("Define AppDatabase.schema"),
+            name = "TODO.db",
+        )
+    }
 }
