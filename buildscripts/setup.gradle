@@ -1,9 +1,11 @@
 def renameConfig = [
+        // DO NOT CHANGE THESE
         templateName                : "template",
         templateAppId               : "template.app.id",
         templateMaterialThemeName   : "TemplateTheme",
         templateApplicationClassName: "TemplateApp",
         templateIOSName             : "templateIOS",
+        // MODIFY THE BELOW PROPERTIES
         newPackage                  : "domain.yourname.app",
         newProjectName              : "Your Project",
         newMaterialThemeName        : "MyMaterialTheme",
