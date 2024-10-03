@@ -12,7 +12,7 @@ class AndroidDatabaseDriverFactory(
 ) : DatabaseDriverFactory {
     override fun createDriver(): SqlDriver {
         return AndroidSqliteDriver(
-            schema = TODO("Define AppDatabase.schema"),
+            schema = AppDatabase.Schema,
             context = context,
             name = "TODO.db",
         )

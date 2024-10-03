@@ -9,7 +9,7 @@ import app.cash.sqldelight.driver.native.NativeSqliteDriver
 class IOSDatabaseDriverFactory : DatabaseDriverFactory {
     override fun createDriver(): SqlDriver {
         return NativeSqliteDriver(
-            schema = TODO("Define AppDatabase.schema"),
+            schema = AppDatabase.Schema,
             name = "TODO.db",
         )
     }
