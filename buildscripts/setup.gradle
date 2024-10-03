@@ -387,7 +387,6 @@ task keepOrRemoveDependencies {
                 "${rootDir}/androidApp/build.gradle.kts",
                 "${rootDir}/shared/build.gradle.kts",
                 "${rootDir}/gradle/libs.versions.toml",
-                "${rootDir}/androidApp/src/main/java/template/TemplateApp.kt",
         ]
 
         filesWithDependencies.each { fileName ->
@@ -401,6 +400,11 @@ task keepOrRemoveDependencies {
             if (renameConfig.useSqldelightDependencies != true) {
                 println("Removing sqldelight dependencies")
                 removeTextFromFile(fileName, "sqldelight")
+
+                delete("${rootDir}/shared/src/commonMain/kotlin/template/shared/DatabaseDriverFactory.kt")
+                delete("${rootDir}/shared/src/androidMain/kotlin/template/shared/DatabaseDriverFactory.android.kt")
+                delete("${rootDir}/shared/src/iosMain/kotlin/template/shared/DatabaseDriverFactory.ios.kt")
+                delete("${rootDir}/shared/src/commonMain/sqldelight/template/shared/AppDatabase.sq")
             }
 
             if (renameConfig.useMultiplatformSettings != true) {
