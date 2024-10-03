@@ -374,6 +374,12 @@ task replaceTemplateReferences {
                 "packageOfResClass = \"${renameConfig.templateName}.shared\"",
                 "packageOfResClass = \"${renameConfig.newPackage}.shared\"",
         )
+
+        replaceTextInFile(
+                "${rootDir}/shared/build.gradle.kts",
+                "packageName.set(\"${renameConfig.templateName}.shared\")",
+                "packageName.set(\"${renameConfig.newPackage}.shared\")"
+        )
     }
 }
 
