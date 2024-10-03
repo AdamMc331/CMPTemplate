@@ -399,6 +399,18 @@ task keepOrRemoveDependencies {
 
             if (renameConfig.useSqldelightDependencies != true) {
                 println("Removing sqldelight dependencies")
+                removeTextFromFile(
+                        fileName,
+                        """
+                        sqldelight {
+                            databases {
+                                create("AppDatabase") {
+                                    packageName.set("template.shared")
+                                }
+                            }
+                        }
+                        """.trimIndent()
+                )
                 removeTextFromFile(fileName, "sqldelight")
 
                 delete("${rootDir}/shared/src/commonMain/kotlin/template/shared/DatabaseDriverFactory.kt")
