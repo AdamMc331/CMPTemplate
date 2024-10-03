@@ -409,14 +409,14 @@ task keepOrRemoveDependencies {
                 removeTextFromFile(
                         fileName,
                         """
-                        sqldelight {
-                            databases {
-                                create("AppDatabase") {
-                                    packageName.set("template.shared")
-                                }
-                            }
-                        }
-                        """.trimIndent()
+sqldelight {
+    databases {
+        create("AppDatabase") {
+            packageName.set("template.shared")
+        }
+    }
+}
+                        """.trim()
                 )
                 removeTextFromFile(fileName, "sqldelight")
 
