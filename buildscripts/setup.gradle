@@ -406,17 +406,14 @@ task keepOrRemoveDependencies {
 
             if (renameConfig.useSqldelightDependencies != true) {
                 println("Removing sqldelight dependencies")
+
+                def originalBlock = """sqldelight{.*databases{.*create("AppDatabase"){.*packageName.set("template.shared").*}.*}.*}"""
+                def newBlock = ""
+
                 replaceTextInFile(
                         fileName,
-                        """
-                        sqldelight {
-                            databases {
-                                create("AppDatabase") {
-                                    packageName.set("template.shared")
-                                }
-                            }
-                        }""".trim(),
-                        ""
+                        originalBlock,
+                        newBlock
                 )
                 removeTextFromFile(fileName, "sqldelight")
 
