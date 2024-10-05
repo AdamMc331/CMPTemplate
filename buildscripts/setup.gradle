@@ -407,14 +407,13 @@ task keepOrRemoveDependencies {
             if (renameConfig.useSqldelightDependencies != true) {
                 println("Removing sqldelight dependencies")
 
-                def originalBlock = """sqldelight{.*databases{.*create("AppDatabase"){.*packageName.set("template.shared").*}.*}.*}"""
-                def newBlock = ""
-
+                def pluginSetupRegex = /sqldelight\s*\{\s*databases\s*\{\s*create\("AppDatabase"\)\s*\{\s*packageName\.set\("template\.shared"\)\s*}\s*}\s*}\s*/
                 replaceTextInFile(
                         fileName,
-                        originalBlock,
-                        newBlock
+                        pluginSetupRegex,
+                        ''
                 )
+
                 removeTextFromFile(fileName, "sqldelight")
 
                 delete("${rootDir}/shared/src/commonMain/kotlin/template/shared/DatabaseDriverFactory.kt")
