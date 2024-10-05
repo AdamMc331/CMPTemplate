@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.cash.paparazzi)
+    alias(libs.plugins.cash.sqldelight)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.multiplatform)
@@ -25,7 +26,7 @@ kotlin {
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "shared"
-            isStatic = true
+            isStatic = false
         }
     }
 
@@ -85,6 +86,14 @@ android {
     }
 
     namespace = "template.shared"
+}
+
+sqldelight {
+    databases {
+        create("AppDatabase") {
+            packageName.set("template.shared")
+        }
+    }
 }
 
 tasks.formatKotlinCommonMain {
