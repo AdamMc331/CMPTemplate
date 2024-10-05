@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:filename")
+
 package template.shared
 
 import android.content.Context

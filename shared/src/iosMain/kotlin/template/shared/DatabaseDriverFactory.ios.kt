@@ -1,3 +1,5 @@
+@file:Suppress("ktlint:standard:filename")
+
 package template.shared
 
 import app.cash.sqldelight.db.SqlDriver
