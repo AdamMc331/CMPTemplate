@@ -44,6 +44,7 @@ kotlin {
             implementation(libs.cash.sqldelight.runtime)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.logging)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.multiplatform.settings.noArg)
         }
