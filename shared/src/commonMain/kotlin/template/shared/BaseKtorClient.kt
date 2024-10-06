@@ -23,7 +23,8 @@ private typealias RemoteParams = Map<String, Any?>
 /**
  * Creates a default [httpClient] that can make requests to the supplied [baseURL].
  *
- * You can either subclass this with a specific client type, like `object GitHubClient : BaseKtorClient("https://api.github.com")`,
+ * You can either subclass this with a specific client type,
+ * like `object GitHubClient : BaseKtorClient("https://api.github.com")`,
  * or repurpose this class to represent a specific client instead.
  */
 open class BaseKtorClient(
