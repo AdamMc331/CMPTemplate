@@ -608,6 +608,7 @@ task renameTemplate {
             renameSharedIOSPackage,
             renameSharedCommonPackage,
             renameSharedTestPackage,
+            renameSharedSqldelightDirectory,
             replaceTemplateReferences,
             renameIOSApp,
             deleteSetupCode,
