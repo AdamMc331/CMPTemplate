@@ -455,6 +455,8 @@ task keepOrRemoveDependencies {
                 removeTextFromFile(fileName, "ktor")
                 removeTextFromFile(fileName, "kotlinx-serialization")
                 removeTextFromFile(fileName, "kotlinx.serialization")
+
+                delete("${rootDir}/shared/src/commonMain/kotlin/template/shared/BaseKtorClient.kt")
             }
 
             if (renameConfig.useKoin != true) {
