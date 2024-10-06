@@ -11,9 +11,9 @@ def renameConfig = [
         newMaterialThemeName        : "MyMaterialTheme",
         newApplicationClassName     : "MyApp",
         newIOSName                  : "myIOS",
-        usePaparazziDependencies    : true,
-        useRenovateDependencies     : true,
-        useSqldelightDependencies   : true,
+        usePaparazzi                : true,
+        useRenovate                 : true,
+        useSqldelight               : true,
         useMultiplatformSettings    : true,
         useKtor                     : true,
         useKoin                     : true,
@@ -35,7 +35,7 @@ task deleteSetupCode() {
         delete(windowsHooksWorkflowFile)
         delete(setupGradle)
 
-        if (renameConfig.useRenovateDependencies != true) {
+        if (renameConfig.useRenovate != true) {
             println("Removing renovate dependencies")
             delete(renovateFile)
         }
@@ -418,14 +418,14 @@ task keepOrRemoveDependencies {
         ]
 
         filesWithDependencies.each { fileName ->
-            if (renameConfig.usePaparazziDependencies != true) {
+            if (renameConfig.usePaparazzi != true) {
                 println("Removing paparazzi dependencies")
                 removeTextFromFile(fileName, "paparazzi")
 
                 delete("${rootDir}/shared/src/test/kotlin/template/shared/PaparazziUtils.kt")
             }
 
-            if (renameConfig.useSqldelightDependencies != true) {
+            if (renameConfig.useSqldelight != true) {
                 println("Removing sqldelight dependencies")
 
                 def pluginSetupRegex = /sqldelight\s*\{\s*databases\s*\{\s*create\("AppDatabase"\)\s*\{\s*packageName\.set\("template\.shared"\)\s*}\s*}\s*}\s*/

@@ -15,13 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set usePaparazziDependencies
+      - name: Set usePaparazzi
         run: |
-          sed -i '' 's/usePaparazziDependencies.* : true/usePaparazziDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
+          sed -i '' 's/usePaparazzi.* : true/usePaparazzi : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
 
-      - name: Set useSqldelightDependencies
+      - name: Set useSqldelight
         run: |
-          sed -i '' 's/useSqldelightDependencies.* : true/useSqldelightDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
+          sed -i '' 's/useSqldelight.* : true/useSqldelight : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
 
       - name: Set useMultiplatformSettings
         run: |
@@ -35,9 +35,9 @@ jobs:
         run: |
           sed -i '' 's/useKoin.* : true/useKoin : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
 
-      - name: Set useRenovateDependencies
+      - name: Set useRenovate
         run: |
-          sed -i '' 's/useRenovateDependencies.* : true/useRenovateDependencies : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
+          sed -i '' 's/useRenovate.* : true/useRenovate : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
 
       - name: Set Up JDK
         uses: actions/setup-java@v4
