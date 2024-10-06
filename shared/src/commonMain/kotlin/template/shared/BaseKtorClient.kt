@@ -49,6 +49,7 @@ open class BaseKtorClient(
      * You can call this function to get a response typed to the given generic, like so:
      * val eventResult: Result<Event> = apiClient.getResponse<Event>(endpoint = "/events/123")
      */
+    @Suppress("TooGenericExceptionCaught")
     suspend inline fun <reified T : Any> getResponse(
         endpoint: String,
         params: RemoteParams = emptyMap(),
