@@ -50,6 +50,9 @@ open class BaseKtorClient(
      * A helper function to build the [baseURL] and [endpoint] operation and performs a get request.
      * Will also pass in the supplied [params] as necessary.
      *
+     * NOTE that it is expected for endpoint to begin with a forward slash (/), it is not automatically
+     * included into the full URL.
+     *
      * You can call this function to get a response typed to the given generic, like so:
      * val eventResult: Result<Event> = apiClient.getResponse<Event>(endpoint = "/events/123")
      */
