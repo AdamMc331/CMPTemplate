@@ -101,6 +101,7 @@ sqldelight {
     }
 }
 
+// NOTE: Replace the template schema.json with the schema for your apollo api.
 apollo {
     service("service") {
         packageName.set("template.shared")

@@ -242,6 +242,23 @@ task renameSharedSqldelightDirectory(type: Copy) {
     }
 }
 
+task renameSharedGraphqlDirectory(type: Copy) {
+    description "Renames the directory for the shared graphql code."
+    group null
+
+    def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
+    def startingBase = "${rootDir}/shared/src/commonMain/graphql/${renameConfig.templateName}"
+    def startingDirectory = "$startingBase/shared"
+    def endingDirectory = "${rootDir}/shared/src/commonMain/graphql/${newPackageAsDirectory}/shared"
+
+    from(startingDirectory)
+    into(endingDirectory)
+
+    doLast {
+        delete(startingBase)
+    }
+}
+
 task renameSharedCommonPackage(type: Copy) {
     description "Renames the template package in the shared/commonMain module."
     group null
@@ -625,6 +642,7 @@ task renameTemplate {
             renameSharedCommonPackage,
             renameSharedTestPackage,
             renameSharedSqldelightDirectory,
+            renameSharedGraphqlDirectory,
             replaceTemplateReferences,
             renameIOSApp,
             deleteSetupCode,
