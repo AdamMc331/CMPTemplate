@@ -645,6 +645,7 @@ task renameTemplate {
             renameSharedGraphqlDirectory,
             replaceTemplateReferences,
             renameIOSApp,
+            formatKotlin,
             deleteSetupCode,
     )
 
