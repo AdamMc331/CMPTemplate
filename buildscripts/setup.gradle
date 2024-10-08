@@ -476,6 +476,8 @@ task keepOrRemoveDependencies {
                 )
 
                 removeTextFromFile(fileName, "apollo")
+
+                delete("${rootDir}/shared/src/commonMain/graphql")
             }
         }
     }
