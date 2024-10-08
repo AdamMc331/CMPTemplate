@@ -17,6 +17,7 @@ def renameConfig = [
         useMultiplatformSettings    : true,
         useKtor                     : true,
         useKoin                     : true,
+        useApollo                   : true,
 ]
 
 task deleteSetupCode() {
@@ -462,6 +463,19 @@ task keepOrRemoveDependencies {
             if (renameConfig.useKoin != true) {
                 println("Removing koin dependencies")
                 removeTextFromFile(fileName, "koin")
+            }
+
+            if (renameConfig.useApollo != true) {
+                println("Removing apollo dependencies")
+
+                def pluginSetupRegex = /apollo\s*\{\s*service\("service"\)\s*\{\s*packageName\.set\("template\.shared"\)\s*}\s*}\s*}\s*/
+                replaceTextInFile(
+                        fileName,
+                        pluginSetupRegex,
+                        ''
+                )
+
+                removeTextFromFile(fileName, "apollo")
             }
         }
     }

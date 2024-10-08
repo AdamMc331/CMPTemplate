@@ -35,6 +35,10 @@ jobs:
         run: |
           sed -i '' 's/useKoin.* : true/useKoin : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
 
+      - name: Set useApollo
+        run: |
+          sed -i '' 's/useApollo.* : true/useApollo : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
+
       - name: Set useRenovate
         run: |
           sed -i '' 's/useRenovate.* : true/useRenovate : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
