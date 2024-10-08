@@ -17,6 +17,7 @@ def renameConfig = [
         useMultiplatformSettings    : true,
         useKtor                     : true,
         useKoin                     : true,
+        useApollo                   : true,
 ]
 
 task deleteSetupCode() {
@@ -232,6 +233,23 @@ task renameSharedSqldelightDirectory(type: Copy) {
     def startingBase = "${rootDir}/shared/src/commonMain/sqldelight/${renameConfig.templateName}"
     def startingDirectory = "$startingBase/shared"
     def endingDirectory = "${rootDir}/shared/src/commonMain/sqldelight/${newPackageAsDirectory}/shared"
+
+    from(startingDirectory)
+    into(endingDirectory)
+
+    doLast {
+        delete(startingBase)
+    }
+}
+
+task renameSharedGraphqlDirectory(type: Copy) {
+    description "Renames the directory for the shared graphql code."
+    group null
+
+    def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
+    def startingBase = "${rootDir}/shared/src/commonMain/graphql/${renameConfig.templateName}"
+    def startingDirectory = "$startingBase/shared"
+    def endingDirectory = "${rootDir}/shared/src/commonMain/graphql/${newPackageAsDirectory}/shared"
 
     from(startingDirectory)
     into(endingDirectory)
@@ -463,6 +481,21 @@ task keepOrRemoveDependencies {
                 println("Removing koin dependencies")
                 removeTextFromFile(fileName, "koin")
             }
+
+            if (renameConfig.useApollo != true) {
+                println("Removing apollo dependencies")
+
+                def pluginSetupRegex = /apollo\s*\{\s*service\("service"\)\s*\{\s*packageName\.set\("template\.shared"\)\s*\}\s*\}\s*/
+                replaceTextInFile(
+                        fileName,
+                        pluginSetupRegex,
+                        ''
+                )
+
+                removeTextFromFile(fileName, "apollo")
+
+                delete("${rootDir}/shared/src/commonMain/graphql")
+            }
         }
     }
 }
@@ -609,6 +642,7 @@ task renameTemplate {
             renameSharedCommonPackage,
             renameSharedTestPackage,
             renameSharedSqldelightDirectory,
+            renameSharedGraphqlDirectory,
             replaceTemplateReferences,
             renameIOSApp,
             deleteSetupCode,
