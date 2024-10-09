@@ -442,6 +442,7 @@ task keepOrRemoveDependencies {
 
                 delete("${rootDir}/shared/src/test/kotlin/template/shared/PaparazziUtils.kt")
                 delete("${rootDir}/shared/src/test/kotlin/template/shared/BasePaparazziTest.kt")
+                delete("${rootDir}/.github/workflows/paparazzi_tests.yml")
             }
 
             if (renameConfig.useSqldelight != true) {
