@@ -648,7 +648,7 @@ task renameTemplate {
             replaceTemplateReferences,
             renameIOSApp,
             deleteSetupCode,
-//            getTasksByName("formatKotlin", false)
+            getTasksByName("formatKotlin", false)
     )
 
     doLast {
