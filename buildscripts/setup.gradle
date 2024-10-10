@@ -648,14 +648,11 @@ task renameTemplate {
             replaceTemplateReferences,
             renameIOSApp,
             deleteSetupCode,
+            getTasksByName("formatKotlin", false)
     )
 
     doLast {
         exec {
-            // Format code after template changes, this matters because ktlint expects
-            // alphabetical imports.
-            commandLine "./gradlew", "formatKotlin"
-
             // After all setup changes happen, run a `git add` so
             // folks can just immediately commit and push if they wish.
             commandLine "git", "add", "${rootDir}/."
