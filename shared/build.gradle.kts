@@ -44,6 +44,8 @@ kotlin {
             implementation(libs.apollo.runtime)
             implementation(libs.cash.sqldelight.coroutines)
             implementation(libs.cash.sqldelight.runtime)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.ktor)
             implementation(libs.koin.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.client.core)

@@ -18,6 +18,7 @@ def renameConfig = [
         useKtor                     : true,
         useKoin                     : true,
         useApollo                   : true,
+        useCoil                     : true,
 ]
 
 task deleteSetupCode() {
@@ -497,6 +498,11 @@ task keepOrRemoveDependencies {
                 removeTextFromFile(fileName, "apollo")
 
                 delete("${rootDir}/shared/src/commonMain/graphql")
+            }
+
+            if (renameConfig.useCoil != true) {
+                println("Removing coil dependencies")
+                removeTextFromFile(fileName, "coil")
             }
         }
     }
