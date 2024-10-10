@@ -5,6 +5,7 @@ androidxLifecycle = "2.8.2"
 androidxTest = "1.2.1"
 apollo = "4.0.1"
 appCompat = "1.7.0"
+coil = "3.0.0-rc01"
 compileSdk = "34"
 composeBom = "2024.09.03"
 detektGradlePlugin = "1.23.7"
@@ -43,6 +44,8 @@ cash-sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver"
 cash-sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 cash-sqldelight-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
 cash-sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 compose-material = { group = "androidx.compose.material3", name = "material3" }
