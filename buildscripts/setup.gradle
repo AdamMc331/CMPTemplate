@@ -651,17 +651,20 @@ task renameTemplate {
     )
 
     doLast {
+        tasks.named(":androidApp:formatKotlin").get().actions.forEach { action ->
+            action.execute(tasks.named(":androidApp:formatKotlin").get())
+        }
+
+        tasks.named(":shared:formatKotlin").get().actions.forEach { action ->
+            action.execute(tasks.named(":shared:formatKotlin").get())
+        }
+
         exec {
             // After all setup changes happen, run a `git add` so
             // folks can just immediately commit and push if they wish.
             commandLine "git", "add", "${rootDir}/."
         }
     }
-
-    finalizedBy(
-            ":androidApp:formatKotlin",
-            ":shared:formatKotlin",
-    )
 }
 
 /**
