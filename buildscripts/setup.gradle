@@ -648,8 +648,6 @@ task renameTemplate {
             replaceTemplateReferences,
             renameIOSApp,
             deleteSetupCode,
-            ":androidApp:formatKotlin",
-            ":shared:formatKotlin",
     )
 
     doLast {
@@ -659,6 +657,11 @@ task renameTemplate {
             commandLine "git", "add", "${rootDir}/."
         }
     }
+
+    finalizedBy(
+            ":androidApp:formatKotlin",
+            ":shared:formatKotlin",
+    )
 }
 
 /**
