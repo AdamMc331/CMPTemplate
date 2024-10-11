@@ -651,12 +651,12 @@ task renameTemplate {
     )
 
     doLast {
-        project(":androidApp").tasks.named("formatKotlin").get().actions.forEach { action ->
-            action.execute(project(":androidApp").tasks.named("formatKotlin").get())
+        project("androidApp").tasks.named("formatKotlin").get().actions.forEach { action ->
+            action.execute(project("androidApp").tasks.named("formatKotlin").get())
         }
 
-        project(":shared").tasks.named("formatKotlin").get().actions.forEach { action ->
-            action.execute(project(":shared").tasks.named("formatKotlin").get())
+        project("shared").tasks.named("formatKotlin").get().actions.forEach { action ->
+            action.execute(project("shared").tasks.named("formatKotlin").get())
         }
 
         exec {
