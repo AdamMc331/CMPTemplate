@@ -647,7 +647,9 @@ task renameTemplate {
             renameSharedGraphqlDirectory,
             replaceTemplateReferences,
             renameIOSApp,
-            deleteSetupCode
+            deleteSetupCode,
+            ":androidApp:formatKotlin",
+            ":shared:formatKotlin",
     )
 
     doLast {
@@ -657,10 +659,6 @@ task renameTemplate {
             commandLine "git", "add", "${rootDir}/."
         }
     }
-
-    finalizedBy(
-            getTasksByName("formatKotlin", false)
-    )
 }
 
 /**
