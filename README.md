@@ -26,6 +26,9 @@ To setup this repository to your needs, open the [setup.gradle](buildscripts/set
 and tweak the `renameConfig` block to your needs. After that, you can run the `renameTemplate` 
 gradle task to have the app module's package name and relevant strings replaced.
 
+> [!NOTE]
+> Note that we currently do not support auto formatting after renaming template, so you will likely want to run `./gradlew formatKotlin` as well to ensure all the imports are in alphabetical order after the rename flow. If you'd like to help fix this, see [this issue](https://github.com/AdamMc331/CMPTemplate/issues/63). 
+
 In addition, it will clean up the relevant setup files and workflows that are specific to this template, it should not require any manual deletion work on your part.
 
 ## What's Included
@@ -49,11 +52,11 @@ The dependencies in the template include:
 
 This template uses [Danger](https://danger.systems) which will perform some checks against our 
 pull requests. You can find the list of checks in the [Dangerfile](Dangerfile). In addition, we 
-have a GitHub Actions workflow for Danger checks. In order for that to work properly, you'll 
-need to give Danger permission to comment on your repository.
+have a GitHub Actions workflow for Danger checks. 
 
-You can do so by navigating to Repository Settings -> Actions -> General, scroll down to `Workflow Permissions`
-and set the permissions to read and write. 
+> [!IMPORTANT]
+> In order for Danger to work properly, you'll need to give Danger permission to comment on your repository.
+> You can do so by navigating to Repository Settings -> Actions -> General, scroll down to `Workflow Permissions`and set the permissions to read and write. 
 
 ### Templates
 
