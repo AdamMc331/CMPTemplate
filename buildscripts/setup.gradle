@@ -658,6 +658,10 @@ task renameTemplate(type: GradleBuild) {
     ]
 }
 
+tasks.named("formatKotlinAndroidMain").configure {
+    dependsOn("renameSharedAndroidPackage")
+}
+
 /**
  * Replaces all instances of [text] in a given [fileName].
  */
