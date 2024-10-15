@@ -35,7 +35,7 @@ task deleteSetupCode() {
         delete(templateChangeWorkflowFile)
         delete(macosHooksWorkflowFile)
         delete(windowsHooksWorkflowFile)
-        delete(setupGradle)
+//        delete(setupGradle)
 
         if (renameConfig.useRenovate != true) {
             println("Removing renovate dependencies")
@@ -656,10 +656,14 @@ task renameTemplate(type: GradleBuild) {
             'deleteSetupCode',
             'formatKotlin',
     ]
-}
 
-project('shared').tasks.named("formatKotlinAndroidMain").configure {
-    dependsOn("renameSharedAndroidPackage")
+    doLast {
+        exec {
+            // After all setup changes happen, run a `git add` so
+            // folks can just immediately commit and push if they wish.
+            commandLine "git", "add", "${rootDir}/."
+        }
+    }
 }
 
 /**
