@@ -658,6 +658,8 @@ task renameTemplateSteps {
 }
 
 task renameTemplate(type: GradleBuild) {
+    description "Runs the template setup steps followed by a formatting pass."
+    group "Template Setup"
 
     tasks = [
             'renameTemplateSteps',
