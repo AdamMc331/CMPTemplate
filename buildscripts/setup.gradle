@@ -638,30 +638,27 @@ task renameIOSApp {
     )
 }
 
-task renameTemplate {
+task renameTemplate(type: GradleBuild) {
     description "Runs all of the necessary template setup tasks based on the renameConfig."
     group "Template Setup"
 
-    dependsOn(
-            keepOrRemoveDependencies,
-            renameAppPackage,
-            renameSharedAndroidPackage,
-            renameSharedIOSPackage,
-            renameSharedCommonPackage,
-            renameSharedTestPackage,
-            renameSharedSqldelightDirectory,
-            renameSharedGraphqlDirectory,
-            replaceTemplateReferences,
-            renameIOSApp,
-            deleteSetupCode,
-    )
+    tasks = [
+            'keepOrRemoveDependencies',
+            'renameAppPackage',
+            'renameSharedAndroidPackage',
+            'renameSharedIOSPackage',
+            'renameSharedCommonPackage',
+            'renameSharedTestPackage',
+            'renameSharedSqldelightDirectory',
+            'renameSharedGraphqlDirectory',
+            'replaceTemplateReferences',
+            'renameIOSApp',
+            'deleteSetupCode',
+            'formatKotlin'
+    ]
 
     doLast {
         exec {
-            // Format code after template changes, this matters because ktlint expects
-            // alphabetical imports.
-            commandLine "./gradlew", "formatKotlin"
-
             // After all setup changes happen, run a `git add` so
             // folks can just immediately commit and push if they wish.
             commandLine "git", "add", "${rootDir}/."
