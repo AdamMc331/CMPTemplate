@@ -638,41 +638,24 @@ task renameIOSApp {
     )
 }
 
-task renameTemplateSteps {
-    description "Runs all of the necessary template setup tasks based on the renameConfig."
-    group "Template Setup"
-
-    dependsOn(
-            keepOrRemoveDependencies,
-            renameAppPackage,
-            renameSharedAndroidPackage,
-            renameSharedIOSPackage,
-            renameSharedCommonPackage,
-            renameSharedTestPackage,
-            renameSharedSqldelightDirectory,
-            renameSharedGraphqlDirectory,
-            replaceTemplateReferences,
-            renameIOSApp,
-            deleteSetupCode,
-    )
-}
-
 task renameTemplate(type: GradleBuild) {
-    description "Runs the template setup steps followed by a formatting pass."
+    description "Runs all of the necessary template setup tasks based on the renameConfig, and a formatting pass."
     group "Template Setup"
 
     tasks = [
-            'renameTemplateSteps',
+            'keepOrRemoveDependencies',
+            'renameAppPackage',
+            'renameSharedAndroidPackage',
+            'renameSharedIOSPackage',
+            'renameSharedCommonPackage',
+            'renameSharedTestPackage',
+            'renameSharedSqldelightDirectory',
+            'renameSharedGraphqlDirectory',
+            'replaceTemplateReferences',
+            'renameIOSApp',
+            'deleteSetupCode',
             'formatKotlin',
     ]
-
-    doLast {
-        exec {
-            // After all setup changes happen, run a `git add` so
-            // folks can just immediately commit and push if they wish.
-            commandLine "git", "add", "${rootDir}/."
-        }
-    }
 }
 
 /**
