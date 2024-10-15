@@ -658,7 +658,7 @@ task renameTemplate(type: GradleBuild) {
     ]
 }
 
-tasks.named(":shared:formatKotlinAndroidMain").configure {
+project('shared').tasks.named("formatKotlinAndroidMain").configure {
     dependsOn("renameSharedAndroidPackage")
 }
 
