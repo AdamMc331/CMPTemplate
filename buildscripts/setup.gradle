@@ -35,7 +35,7 @@ task deleteSetupCode() {
         delete(templateChangeWorkflowFile)
         delete(macosHooksWorkflowFile)
         delete(windowsHooksWorkflowFile)
-//        delete(setupGradle)
+        delete(setupGradle)
 
         if (renameConfig.useRenovate != true) {
             println("Removing renovate dependencies")
@@ -638,24 +638,28 @@ task renameIOSApp {
     )
 }
 
-task renameTemplate(type: GradleBuild) {
+task renameTemplate() {
     description "Runs all of the necessary template setup tasks based on the renameConfig, and a formatting pass."
     group "Template Setup"
 
-    tasks = [
-            'keepOrRemoveDependencies',
-            'renameAppPackage',
-            'renameSharedAndroidPackage',
-            'renameSharedIOSPackage',
-            'renameSharedCommonPackage',
-            'renameSharedTestPackage',
-            'renameSharedSqldelightDirectory',
-            'renameSharedGraphqlDirectory',
-            'replaceTemplateReferences',
-            'renameIOSApp',
-            'deleteSetupCode',
-            'formatKotlin',
-    ]
+    dependsOn(
+            keepOrRemoveDependencies,
+            renameAppPackage,
+            renameSharedAndroidPackage,
+            renameSharedIOSPackage,
+            renameSharedCommonPackage,
+            renameSharedTestPackage,
+            renameSharedSqldelightDirectory,
+            renameSharedGraphqlDirectory,
+            replaceTemplateReferences,
+            renameIOSApp,
+            deleteSetupCode,
+    )
+
+    finalizedBy(
+            ":androidApp:formatKotlin",
+            ":shared:formatKotlin",
+    )
 
     doLast {
         exec {
