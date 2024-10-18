@@ -638,23 +638,27 @@ task renameIOSApp {
     )
 }
 
+task renameTemplateSteps {
+    dependsOn(
+            keepOrRemoveDependencies,
+            renameAppPackage,
+            renameSharedAndroidPackage,
+            renameSharedIOSPackage,
+            renameSharedCommonPackage,
+            renameSharedTestPackage,
+            renameSharedSqldelightDirectory,
+            renameSharedGraphqlDirectory,
+            replaceTemplateReferences,
+            renameIOSApp,
+            deleteSetupCode,
+    )
+}
+
 task renameTemplate(type: GradleBuild) {
     description "Runs all of the necessary template setup tasks based on the renameConfig, and a formatting pass."
     group "Template Setup"
 
-    tasks = [
-            'keepOrRemoveDependencies',
-            'renameAppPackage',
-            'renameSharedAndroidPackage',
-            'renameSharedIOSPackage',
-            'renameSharedCommonPackage',
-            'renameSharedTestPackage',
-            'renameSharedSqldelightDirectory',
-            'renameSharedGraphqlDirectory',
-            'replaceTemplateReferences',
-            'renameIOSApp',
-            'deleteSetupCode',
-    ]
+    dependsOn(renameTemplateSteps)
 
     finalizedBy(
             ":androidApp:formatKotlin",
