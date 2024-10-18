@@ -638,27 +638,23 @@ task renameIOSApp {
     )
 }
 
-project(":shared").tasks.named("formatKotlinAndroidMain") {
-    dependsOn(tasks.named("renameSharedAndroidPackage"))
-}
-
 task renameTemplate {
     description "Runs all of the necessary template setup tasks based on the renameConfig, and a formatting pass."
     group "Template Setup"
 
-    dependsOn(
-            keepOrRemoveDependencies,
-            renameAppPackage,
-            renameSharedAndroidPackage,
-            renameSharedIOSPackage,
-            renameSharedCommonPackage,
-            renameSharedTestPackage,
-            renameSharedSqldelightDirectory,
-            renameSharedGraphqlDirectory,
-            replaceTemplateReferences,
-            renameIOSApp,
-            deleteSetupCode,
-    )
+    tasks = [
+            'keepOrRemoveDependencies',
+            'renameAppPackage',
+            'renameSharedAndroidPackage',
+            'renameSharedIOSPackage',
+            'renameSharedCommonPackage',
+            'renameSharedTestPackage',
+            'renameSharedSqldelightDirectory',
+            'renameSharedGraphqlDirectory',
+            'replaceTemplateReferences',
+            'renameIOSApp',
+            'deleteSetupCode',
+    ]
 
     finalizedBy(
             ":androidApp:formatKotlin",
