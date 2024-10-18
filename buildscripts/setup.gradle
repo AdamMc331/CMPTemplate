@@ -35,7 +35,7 @@ task deleteSetupCode() {
         delete(templateChangeWorkflowFile)
         delete(macosHooksWorkflowFile)
         delete(windowsHooksWorkflowFile)
-//        delete(setupGradle)
+        delete(setupGradle)
 
         if (renameConfig.useRenovate != true) {
             println("Removing renovate dependencies")
