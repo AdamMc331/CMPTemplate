@@ -1,26 +1,23 @@
 [versions]
-activityCompose = "1.9.2"
+activityCompose = "1.9.3"
 agp = "8.7.1"
-androidxLifecycle = "2.8.2"
+androidxLifecycle = "2.8.3"
 androidxTest = "1.2.1"
 apollo = "4.0.1"
-appCompat = "1.7.0"
 coil = "3.0.0-rc01"
 compileSdk = "34"
-composeBom = "2024.09.03"
+composeBom = "2024.10.00"
 detektGradlePlugin = "1.23.7"
 espresso = "3.6.1"
 gradleVersionsPlugin = "0.51.0"
 junit = "4.13.2"
-kmpCompose = "1.6.11"
+kmpCompose = "1.7.0"
 koin = "4.0.0"
 kotlin = "2.0.21"
 kotlinter = "4.4.1"
 ksp = "2.0.21-1.0.25"
 ktor = "3.0.0"
-ktxCore = "1.13.1"
 leakCanary = "2.14"
-lifecycle = "2.8.6"
 material = "1.12.0"
 minSdk = "21"
 multiplatformSettings = "1.2.0"
@@ -32,9 +29,6 @@ testParameterInjector = "1.18"
 [libraries]
 android-material = { module = "com.google.android.material:material", version.ref = "material" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
-androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "ktxCore" }
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
-androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidxLifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
@@ -47,12 +41,9 @@ cash-sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref 
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
-compose-material = { group = "androidx.compose.material3", name = "material3" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
 compose-ui-test-junit = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 google-testparameterinjector = { module = "com.google.testparameterinjector:test-parameter-injector", version.ref = "testParameterInjector" }
 junit = { module = "junit:junit", version.ref = "junit" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }

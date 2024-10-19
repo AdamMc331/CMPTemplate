@@ -1,3 +1,6 @@
+import org.jmailen.gradle.kotlinter.tasks.FormatTask
+import org.jmailen.gradle.kotlinter.tasks.LintTask
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
@@ -55,17 +58,10 @@ dependencies {
     implementation(project(":shared"))
     implementation(libs.android.material)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.compose.material)
-    implementation(libs.compose.material.icons.extended)
     implementation(libs.compose.ui)
-    implementation(libs.compose.ui.tooling)
 
     debugImplementation(platform(libs.compose.bom))
     debugImplementation(libs.compose.ui.test.manifest)
-    debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.square.leakcanary)
 
     testImplementation(libs.junit)
@@ -76,10 +72,10 @@ dependencies {
     androidTestImplementation(libs.compose.ui.test.junit)
 }
 
-tasks.formatKotlinMain {
+tasks.withType<FormatTask> {
     exclude { it.file.path.contains("build/")}
 }
 
-tasks.lintKotlinMain {
+tasks.withType<LintTask> {
     exclude { it.file.path.contains("build/")}
 }
