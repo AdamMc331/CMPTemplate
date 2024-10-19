@@ -658,12 +658,11 @@ task renameTemplate(type: GradleBuild) {
     description "Runs all of the necessary template setup tasks based on the renameConfig, and a formatting pass."
     group "Template Setup"
 
-    dependsOn(renameTemplateSteps)
-
-    finalizedBy(
-            ":androidApp:formatKotlin",
-            ":shared:formatKotlin",
-    )
+    tasks = [
+            'renameTemplate',
+            'androidApp:formatKotlin',
+            'shared:formatKotlin',
+    ]
 
     doLast {
         exec {
