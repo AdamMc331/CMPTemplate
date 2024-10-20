@@ -659,7 +659,7 @@ task renameTemplate(type: GradleBuild) {
     group "Template Setup"
 
     tasks = [
-            'renameTemplate',
+            'renameTemplateSteps',
             'androidApp:formatKotlin',
             'shared:formatKotlin',
     ]
