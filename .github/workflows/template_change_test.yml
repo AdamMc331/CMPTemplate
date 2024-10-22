@@ -9,6 +9,7 @@ jobs:
   rename-template:
     strategy:
       matrix:
+        fail-fast: false
         keepCustomizableDependencies: [true, false]
 
     runs-on: macos-14
