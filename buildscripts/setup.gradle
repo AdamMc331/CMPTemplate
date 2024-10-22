@@ -660,12 +660,14 @@ task renameTemplate(type: GradleBuild) {
 
     tasks = [
             'renameTemplateSteps',
-    ]
-
-    finalizedBy(
             'androidApp:formatKotlin',
             'shared:formatKotlin',
-    )
+    ]
+
+//    finalizedBy(
+//            'androidApp:formatKotlin',
+//            'shared:formatKotlin',
+//    )
 
     doLast {
         exec {
