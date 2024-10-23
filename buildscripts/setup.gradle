@@ -660,6 +660,7 @@ task renameTemplate(type: GradleBuild) {
 
     tasks = [
             'renameTemplateSteps',
+            'clean',
             'androidApp:formatKotlin',
             'shared:formatKotlin',
     ]
