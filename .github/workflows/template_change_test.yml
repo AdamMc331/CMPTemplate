@@ -16,6 +16,7 @@ jobs:
     strategy:
       matrix:
         keepCustomizableDependencies: [true, false]
+      fail-fast: false
 
     runs-on: macos-14
     steps:
@@ -83,6 +84,9 @@ jobs:
           action: build
           use-xcpretty: false
           build-settings: CODE_SIGN_IDENTITY= CODE_SIGNING_REQUIRED=NO
+
+      - name: Lint Checks
+        run: ./gradlew detektAll lintKotlin lint
 
       - name: Run Tests
         run: ./gradlew test
