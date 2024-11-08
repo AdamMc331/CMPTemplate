@@ -51,7 +51,7 @@ The dependencies in the template include:
 ### Danger
 
 This template uses [Danger](https://danger.systems) which will perform some checks against our 
-pull requests. You can find the list of checks in the [Dangerfile](Dangerfile). In addition, we 
+pull requests. You can find the list of checks in the [Dangerfile](Dangerfile.df.kts). In addition, we 
 have a GitHub Actions workflow for Danger checks. 
 
 > [!IMPORTANT]
