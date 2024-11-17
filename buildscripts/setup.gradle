@@ -638,6 +638,18 @@ task renameIOSApp {
     )
 }
 
+project('androidApp').tasks.named {
+    it == "formatKotlin"
+}.configureEach {
+    dependsOn(rootProject.tasks.named("renameTemplate"))
+}
+
+project('shared').tasks.named {
+    it == "formatKotlin"
+}.configureEach {
+    dependsOn(rootProject.tasks.named("renameTemplate"))
+}
+
 task renameTemplate {
     description "Runs all of the necessary template setup tasks based on the renameConfig, and a formatting pass."
     group "Template Setup"
@@ -656,7 +668,7 @@ task renameTemplate {
             deleteSetupCode,
     )
 
-    finalizedBy("app:formatKotlin", "shared:formatKotlin")
+    finalizedBy("androidApp:formatKotlin", "shared:formatKotlin")
 
     doLast {
         exec {
