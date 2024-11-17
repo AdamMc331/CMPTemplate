@@ -642,7 +642,7 @@ task renameTemplate(type: GradleBuild) {
     description "Runs all of the necessary template setup tasks based on the renameConfig, and a formatting pass."
     group "Template Setup"
 
-    steps = [
+    tasks = [
             'keepOrRemoveDependencies',
             'renameAppPackage',
             'renameSharedAndroidPackage',
