@@ -654,6 +654,12 @@ project('shared').tasks.named {
     dependsOn(rootProject.tasks.named("renameTemplate"))
 }
 
+project('shared').tasks.named {
+    it == "generateCommonMainAppDatabaseInterface"
+}.configureEach {
+    dependsOn(rootProject.tasks.named("renameSharedSqldelightDirectory"))
+}
+
 task renameTemplate {
     description "Runs all of the necessary template setup tasks based on the renameConfig, and a formatting pass."
     group "Template Setup"
