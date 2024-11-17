@@ -639,13 +639,17 @@ task renameIOSApp {
 }
 
 project('androidApp').tasks.named {
-    it == "formatKotlin"
+    // startsWith is used because this applies to multiple tasks,
+    // like formatKotlinMain, formatKotlinTest, etc.
+    it.startsWith("formatKotlin")
 }.configureEach {
     dependsOn(rootProject.tasks.named("renameTemplate"))
 }
 
 project('shared').tasks.named {
-    it == "formatKotlin"
+    // startsWith is used because this applies to multiple tasks,
+    // like formatKotlinMain, formatKotlinTest, etc.
+    it.startsWith("formatKotlin")
 }.configureEach {
     dependsOn(rootProject.tasks.named("renameTemplate"))
 }
