@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import template.shared.theme.TemplateTheme
+import template.shared.ui.theme.TemplateTheme
 
 @Preview
 @Composable
