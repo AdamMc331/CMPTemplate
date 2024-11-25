@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import app.cash.paparazzi.Paparazzi
-import template.shared.theme.TemplateTheme
+import template.shared.ui.theme.TemplateTheme
 
 /**
  * This is a helper function that renders all of our content inside a box that takes up max space,

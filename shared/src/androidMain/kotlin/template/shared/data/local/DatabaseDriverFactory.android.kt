@@ -1,6 +1,6 @@
 @file:Suppress("ktlint:standard:filename")
 
-package template.shared
+package template.shared.data.local
 
 import android.content.Context
 import app.cash.sqldelight.db.SqlDriver
