@@ -231,6 +231,18 @@ static def replaceTemplateReferences(rootDir, renameConfig) {
             renameConfig.templateIOSName,
             renameConfig.newIOSName
     )
+
+    replaceTextInFile(
+            "$rootDir/desktopApp/build.gradle.kts",
+            "mainClass = \"${renameConfig.templateName}.MainKt\"",
+            "mainClass = \"${renameConfig.newPackage}.MainKt\"",
+    )
+
+    replaceTextInFile(
+            "$rootDir/desktopApp/build.gradle.kts",
+            "package = \"${renameConfig.templateName}\"",
+            "package = \"${renameConfig.newPackage}\"",
+    )
 }
 
 static def keepOrRemoveDependencies(project, renameConfig) {
