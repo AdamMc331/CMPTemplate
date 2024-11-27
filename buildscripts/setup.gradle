@@ -66,38 +66,43 @@ task renameTemplate(type: Copy) {
     def templateName = renameConfig.templateName
 
     // Android App Package
-    into("androidApp/src/main/kotlin/$newPackageAsDirectory") {
-        from("androidApp/src/main/kotlin/$templateName")
+    from("androidApp/src/main/kotlin/$templateName") {
+        into("androidApp/src/main/kotlin/$newPackageAsDirectory")
     }
 
     // Shared Android Package
-    into("shared/src/androidMain/kotlin/$newPackageAsDirectory/shared") {
-        from("shared/src/androidMain/kotlin/$templateName/shared")
+    from("shared/src/androidMain/kotlin/$templateName/shared") {
+        into("shared/src/androidMain/kotlin/$newPackageAsDirectory/shared")
     }
 
     // Shared iOS Package
-    into("shared/src/iosMain/kotlin/$newPackageAsDirectory/shared") {
-        from("shared/src/iosMain/kotlin/$templateName/shared")
+    from("shared/src/iosMain/kotlin/$templateName/shared") {
+        into("shared/src/iosMain/kotlin/$newPackageAsDirectory/shared")
+    }
+
+    // Shared Desktop Package
+    from("shared/src/desktopMain/kotlin/$templateName/shared") {
+        into("shared/src/desktopMain/kotlin/$newPackageAsDirectory/shared")
     }
 
     // Shared Common Package
-    into("shared/src/commonMain/kotlin/$newPackageAsDirectory/shared") {
-        from("shared/src/commonMain/kotlin/$templateName/shared")
-    }
-
-    // Shared Test Package
-    into("shared/src/test/kotlin/$newPackageAsDirectory/shared") {
-        from("shared/src/test/kotlin/$templateName/shared")
+    from("shared/src/commonMain/kotlin/$templateName/shared") {
+        into("shared/src/commonMain/kotlin/$newPackageAsDirectory/shared")
     }
 
     // Shared Sqldelight Directory
-    into("shared/src/commonMain/sqldelight/$newPackageAsDirectory/shared") {
-        from("shared/src/commonMain/sqldelight/$templateName/shared")
+    from("shared/src/commonMain/sqldelight/$templateName/shared") {
+        into("shared/src/commonMain/sqldelight/$newPackageAsDirectory/shared")
     }
 
     // Shared Graphql Directory
-    into("shared/src/commonMain/graphql/$newPackageAsDirectory/shared") {
-        from("shared/src/commonMain/graphql/$templateName/shared")
+    from("shared/src/commonMain/graphql/$templateName/shared") {
+        into("shared/src/commonMain/graphql/$newPackageAsDirectory/shared")
+    }
+
+    // Desktop App Package
+    from("desktopApp/src/jvmMain/kotlin/$templateName") {
+        into("desktopApp/src/jvmMain/kotlin/$newPackageAsDirectory")
     }
 
     // Replace package statements
@@ -152,8 +157,10 @@ task renameTemplate(type: Copy) {
         replaceTemplateReferences(rootDir, renameConfig)
         deleteSetupCode(project)
         delete("$rootDir/androidApp/src/main/kotlin/$templateName")
+        delete("$rootDir/desktopApp/src/jvmMain/kotlin/$templateName")
         delete("$rootDir/shared/src/androidMain/kotlin/$templateName")
         delete("$rootDir/shared/src/iosMain/kotlin/$templateName")
+        delete("$rootDir/shared/src/desktopMain/kotlin/$templateName")
         delete("$rootDir/shared/src/commonMain/kotlin/$templateName")
         delete("$rootDir/shared/src/commonMain/sqldelight/$templateName")
         delete("$rootDir/shared/src/commonMain/graphql/$templateName")
@@ -225,6 +232,18 @@ static def replaceTemplateReferences(rootDir, renameConfig) {
             "$rootDir/.github/workflows/ios_build.yml",
             renameConfig.templateIOSName,
             renameConfig.newIOSName
+    )
+
+    replaceTextInFile(
+            "$rootDir/desktopApp/build.gradle.kts",
+            "mainClass = \"${renameConfig.templateName}.MainKt\"",
+            "mainClass = \"${renameConfig.newPackage}.MainKt\"",
+    )
+
+    replaceTextInFile(
+            "$rootDir/desktopApp/build.gradle.kts",
+            "package = \"${renameConfig.templateName}\"",
+            "package = \"${renameConfig.newPackage}\"",
     )
 }
 
