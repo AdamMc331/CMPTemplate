@@ -101,8 +101,8 @@ task renameTemplate(type: Copy) {
     }
 
     // Desktop App Package
-    from("desktopApp/src/main/kotlin/$templateName") {
-        into("desktopApp/src/main/kotlin/$newPackageAsDirectory")
+    from("desktopApp/src/jvmMain/kotlin/$templateName") {
+        into("desktopApp/src/jvmMain/kotlin/$newPackageAsDirectory")
     }
 
     // Replace package statements
@@ -157,8 +157,10 @@ task renameTemplate(type: Copy) {
         replaceTemplateReferences(rootDir, renameConfig)
         deleteSetupCode(project)
         delete("$rootDir/androidApp/src/main/java/$templateName")
+        delete("$rootDir/desktopApp/src/jvmMain/kotlin/$templateName")
         delete("$rootDir/shared/src/androidMain/kotlin/$templateName")
         delete("$rootDir/shared/src/iosMain/kotlin/$templateName")
+        delete("$rootDir/shared/src/desktopMain/kotlin/$templateName")
         delete("$rootDir/shared/src/commonMain/kotlin/$templateName")
         delete("$rootDir/shared/src/commonMain/sqldelight/$templateName")
         delete("$rootDir/shared/src/commonMain/graphql/$templateName")
