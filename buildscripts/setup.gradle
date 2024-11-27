@@ -11,7 +11,6 @@ def renameConfig = [
         newMaterialThemeName        : "MyMaterialTheme",
         newApplicationClassName     : "MyApp",
         newIOSName                  : "myIOS",
-        usePaparazzi                : true,
         useRenovate                 : true,
         useSqldelight               : true,
         useMultiplatformSettings    : true,
@@ -437,15 +436,6 @@ task keepOrRemoveDependencies {
         ]
 
         filesWithDependencies.each { fileName ->
-            if (renameConfig.usePaparazzi != true) {
-                println("Removing paparazzi dependencies")
-                removeTextFromFile(fileName, "paparazzi")
-
-                delete("${rootDir}/shared/src/test/kotlin/template/shared/PaparazziUtils.kt")
-                delete("${rootDir}/shared/src/test/kotlin/template/shared/BasePaparazziTest.kt")
-                delete("${rootDir}/.github/workflows/paparazzi_tests.yml")
-            }
-
             if (renameConfig.useSqldelight != true) {
                 println("Removing sqldelight dependencies")
 

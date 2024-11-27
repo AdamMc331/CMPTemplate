@@ -6,7 +6,6 @@ import org.jmailen.gradle.kotlinter.tasks.LintTask
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.apollo.graphql)
-    alias(libs.plugins.cash.paparazzi)
     alias(libs.plugins.cash.sqldelight)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.compose)
