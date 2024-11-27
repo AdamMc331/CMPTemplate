@@ -66,8 +66,8 @@ task renameTemplate(type: Copy) {
     def templateName = renameConfig.templateName
 
     // Android App Package
-    into("androidApp/src/main/java/$newPackageAsDirectory") {
-        from("androidApp/src/main/java/$templateName")
+    into("androidApp/src/main/kotlin/$newPackageAsDirectory") {
+        from("androidApp/src/main/kotlin/$templateName")
     }
 
     // Shared Android Package
@@ -151,7 +151,7 @@ task renameTemplate(type: Copy) {
     doLast {
         replaceTemplateReferences(rootDir, renameConfig)
         deleteSetupCode(project)
-        delete("$rootDir/androidApp/src/main/java/$templateName")
+        delete("$rootDir/androidApp/src/main/kotlin/$templateName")
         delete("$rootDir/shared/src/androidMain/kotlin/$templateName")
         delete("$rootDir/shared/src/iosMain/kotlin/$templateName")
         delete("$rootDir/shared/src/commonMain/kotlin/$templateName")
