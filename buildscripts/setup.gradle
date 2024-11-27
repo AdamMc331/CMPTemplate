@@ -146,7 +146,7 @@ task renameTemplate(type: Copy) {
 
     doLast {
         replaceTemplateReferences(rootDir, renameConfig)
-        keepOrRemoveDependencies(rootDir, renameConfig)
+        keepOrRemoveDependencies(project, renameConfig)
         deleteSetupCode(project)
         delete("$rootDir/androidApp/src/main/java/$templateName")
         delete("$rootDir/shared/src/androidMain/kotlin/$templateName")
@@ -225,7 +225,9 @@ static def replaceTemplateReferences(rootDir, renameConfig) {
     )
 }
 
-static def keepOrRemoveDependencies(rootDir, renameConfig) {
+static def keepOrRemoveDependencies(project, renameConfig) {
+    def rootDir = project.rootDir
+
     def filesWithDependencies = [
             "$rootDir/build.gradle.kts",
             "$rootDir/androidApp/build.gradle.kts",
@@ -246,10 +248,10 @@ static def keepOrRemoveDependencies(rootDir, renameConfig) {
 
             removeTextFromFile(fileName, "sqldelight")
 
-            delete("$rootDir/shared/src/commonMain/kotlin/template/shared/data/local/DatabaseDriverFactory.kt")
-            delete("$rootDir/shared/src/androidMain/kotlin/template/shared/data/local/DatabaseDriverFactory.android.kt")
-            delete("$rootDir/shared/src/iosMain/kotlin/template/shared/data/local/DatabaseDriverFactory.ios.kt")
-            delete("$rootDir/shared/src/commonMain/sqldelight/template/shared/AppDatabase.sq")
+            project.delete("$rootDir/shared/src/commonMain/kotlin/template/shared/data/local/DatabaseDriverFactory.kt")
+            project.delete("$rootDir/shared/src/androidMain/kotlin/template/shared/data/local/DatabaseDriverFactory.android.kt")
+            project.delete("$rootDir/shared/src/iosMain/kotlin/template/shared/data/local/DatabaseDriverFactory.ios.kt")
+            project.delete("$rootDir/shared/src/commonMain/sqldelight/template/shared/AppDatabase.sq")
         }
 
         if (renameConfig.useMultiplatformSettings != true) {
@@ -265,7 +267,7 @@ static def keepOrRemoveDependencies(rootDir, renameConfig) {
             removeTextFromFile(fileName, "kotlinx-serialization")
             removeTextFromFile(fileName, "kotlinx.serialization")
 
-            delete("$rootDir/shared/src/commonMain/kotlin/template/shared/data/remote/BaseKtorClient.kt")
+            project.delete("$rootDir/shared/src/commonMain/kotlin/template/shared/data/remote/BaseKtorClient.kt")
         }
 
         if (renameConfig.useKoin != true) {
@@ -285,7 +287,7 @@ static def keepOrRemoveDependencies(rootDir, renameConfig) {
 
             removeTextFromFile(fileName, "apollo")
 
-            delete("$rootDir/shared/src/commonMain/graphql")
+            project.delete("$rootDir/shared/src/commonMain/graphql")
         }
 
         if (renameConfig.useCoil != true) {
