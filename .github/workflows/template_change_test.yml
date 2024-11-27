@@ -22,10 +22,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set usePaparazzi
-        run: |
-          sed -i '' 's/usePaparazzi.* : true/usePaparazzi : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
-
       - name: Set useSqldelight
         run: |
           sed -i '' 's/useSqldelight.* : true/useSqldelight : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle

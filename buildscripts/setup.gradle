@@ -11,7 +11,6 @@ def renameConfig = [
         newMaterialThemeName        : "MyMaterialTheme",
         newApplicationClassName     : "MyApp",
         newIOSName                  : "myIOS",
-        usePaparazzi                : true,
         useRenovate                 : true,
         useSqldelight               : true,
         useMultiplatformSettings    : true,
@@ -21,652 +20,301 @@ def renameConfig = [
         useCoil                     : true,
 ]
 
-task deleteSetupCode() {
-    def workflowsFolder = "${rootDir}/.github/workflows"
-    def buildscriptsFolder = "${rootDir}/buildscripts"
+task renameIOSProject(type: Copy) {
+    into(rootDir)
+
+    from("iosApp/${renameConfig.templateIOSName}") {
+        into("iosApp/${renameConfig.newIOSName}")
+    }
+
+    from("iosApp/${renameConfig.templateIOSName}.xcodeproj") {
+        into("iosApp/${renameConfig.newIOSName}.xcodeproj")
+    }
+
+    from("iosApp/${renameConfig.templateIOSName}Tests") {
+        into("iosApp/${renameConfig.newIOSName}Tests")
+    }
+
+    from("iosApp/${renameConfig.templateIOSName}UITests") {
+        into("iosApp/${renameConfig.newIOSName}UITests")
+    }
+
+    filter { line ->
+        line.replaceAll(
+                renameConfig.templateIOSName,
+                renameConfig.newIOSName
+        )
+    }
+
+    rename { filename ->
+        filename.replace renameConfig.templateIOSName, renameConfig.newIOSName
+    }
+
+    doLast {
+        delete("$rootDir/iosApp/${renameConfig.templateIOSName}")
+        delete("$rootDir/iosApp/${renameConfig.templateIOSName}Tests")
+        delete("$rootDir/iosApp/${renameConfig.templateIOSName}UITests")
+    }
+}
+
+task renameTemplate(type: Copy) {
+    dependsOn(renameIOSProject)
+
+    into(rootDir)
+
+    def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
+    def templateName = renameConfig.templateName
+
+    // Android App Package
+    into("androidApp/src/main/java/$newPackageAsDirectory") {
+        from("androidApp/src/main/java/$templateName")
+    }
+
+    // Shared Android Package
+    into("shared/src/androidMain/kotlin/$newPackageAsDirectory/shared") {
+        from("shared/src/androidMain/kotlin/$templateName/shared")
+    }
+
+    // Shared iOS Package
+    into("shared/src/iosMain/kotlin/$newPackageAsDirectory/shared") {
+        from("shared/src/iosMain/kotlin/$templateName/shared")
+    }
+
+    // Shared Common Package
+    into("shared/src/commonMain/kotlin/$newPackageAsDirectory/shared") {
+        from("shared/src/commonMain/kotlin/$templateName/shared")
+    }
+
+    // Shared Test Package
+    into("shared/src/test/kotlin/$newPackageAsDirectory/shared") {
+        from("shared/src/test/kotlin/$templateName/shared")
+    }
+
+    // Shared Sqldelight Directory
+    into("shared/src/commonMain/sqldelight/$newPackageAsDirectory/shared") {
+        from("shared/src/commonMain/sqldelight/$templateName/shared")
+    }
+
+    // Shared Graphql Directory
+    into("shared/src/commonMain/graphql/$newPackageAsDirectory/shared") {
+        from("shared/src/commonMain/graphql/$templateName/shared")
+    }
+
+    // Replace package statements
+    filter { line ->
+        line.replaceAll(
+                "package ${renameConfig.templateName}",
+                "package ${renameConfig.newPackage}"
+        )
+    }
+
+    // Replace import statements
+    filter { line ->
+        line.replaceAll(
+                "import ${renameConfig.templateName}",
+                "import ${renameConfig.newPackage}"
+        )
+    }
+
+    // Replace Theme references. We can just replace on name,
+    // which covers both imports and function calls.
+    filter { line ->
+        line.replaceAll(
+                "${renameConfig.templateMaterialThemeName}",
+                "${renameConfig.newMaterialThemeName}"
+        )
+    }
+
+    // Replace application class references
+    filter { line ->
+        line.replaceAll(
+                "${renameConfig.templateApplicationClassName}",
+                "${renameConfig.newApplicationClassName}",
+        )
+    }
+
+    rename { fileName ->
+        if (fileName.contains("${renameConfig.templateApplicationClassName}")) {
+            fileName.replace(
+                    "${renameConfig.templateApplicationClassName}",
+                    "${renameConfig.newApplicationClassName}",
+            )
+        } else {
+            fileName
+        }
+    }
+
+    doFirst {
+        keepOrRemoveDependencies(project, renameConfig)
+    }
+
+    doLast {
+        replaceTemplateReferences(rootDir, renameConfig)
+        deleteSetupCode(project)
+        delete("$rootDir/androidApp/src/main/java/$templateName")
+        delete("$rootDir/shared/src/androidMain/kotlin/$templateName")
+        delete("$rootDir/shared/src/iosMain/kotlin/$templateName")
+        delete("$rootDir/shared/src/commonMain/kotlin/$templateName")
+        delete("$rootDir/shared/src/commonMain/sqldelight/$templateName")
+        delete("$rootDir/shared/src/commonMain/graphql/$templateName")
+
+        exec {
+            // After all setup changes happen, run a `git add` so
+            // folks can just immediately commit and push if they wish.
+            commandLine "git", "add", "$rootDir/."
+        }
+    }
+}
+
+static def replaceTemplateReferences(rootDir, renameConfig) {
+    replaceTextInFile(
+            "$rootDir/androidApp/src/main/AndroidManifest.xml",
+            "${renameConfig.templateName}.MainActivity",
+            "${renameConfig.newPackage}.MainActivity",
+    )
+
+    replaceTextInFile(
+            "$rootDir/androidApp/src/main/AndroidManifest.xml",
+            ".${renameConfig.templateApplicationClassName}",
+            ".${renameConfig.newApplicationClassName}",
+    )
+
+    replaceTextInFile(
+            "$rootDir/androidApp/build.gradle.kts",
+            "namespace = \"${renameConfig.templateName}\"",
+            "namespace = \"${renameConfig.newPackage}\"",
+    )
+
+    replaceTextInFile(
+            "$rootDir/androidApp/build.gradle.kts",
+            "applicationId = \"${renameConfig.templateAppId}\"",
+            "applicationId = \"${renameConfig.newPackage}\"",
+    )
+
+    replaceTextInFile(
+            "$rootDir/settings.gradle.kts",
+            "rootProject.name = \"${renameConfig.templateName}\"",
+            "rootProject.name = \"${renameConfig.newProjectName}\"",
+    )
+
+    replaceTextInFile(
+            "$rootDir/androidApp/src/main/res/values/strings.xml",
+            "<string name=\"app_name\">${renameConfig.templateName}</string>",
+            "<string name=\"app_name\">${renameConfig.newProjectName}</string>",
+    )
+
+    replaceTextInFile(
+            "$rootDir/shared/build.gradle.kts",
+            "namespace = \"${renameConfig.templateName}.shared\"",
+            "namespace = \"${renameConfig.newPackage}.shared\"",
+    )
+
+    replaceTextInFile(
+            "$rootDir/shared/build.gradle.kts",
+            "packageOfResClass = \"${renameConfig.templateName}.shared\"",
+            "packageOfResClass = \"${renameConfig.newPackage}.shared\"",
+    )
+
+    replaceTextInFile(
+            "$rootDir/shared/build.gradle.kts",
+            "packageName.set\\(\"${renameConfig.templateName}.shared\"\\)",
+            "packageName.set\\(\"${renameConfig.newPackage}.shared\"\\)"
+    )
+
+    replaceTextInFile(
+            "$rootDir/.github/workflows/ios_build.yml",
+            renameConfig.templateIOSName,
+            renameConfig.newIOSName
+    )
+}
+
+static def keepOrRemoveDependencies(project, renameConfig) {
+    def rootDir = project.rootDir
+
+    def filesWithDependencies = [
+            "$rootDir/build.gradle.kts",
+            "$rootDir/androidApp/build.gradle.kts",
+            "$rootDir/shared/build.gradle.kts",
+            "$rootDir/gradle/libs.versions.toml",
+    ]
+
+    filesWithDependencies.each { fileName ->
+        if (renameConfig.useSqldelight != true) {
+            println("Removing sqldelight dependencies")
+
+            def pluginSetupRegex = /sqldelight\s*\{\s*databases\s*\{\s*create\("AppDatabase"\)\s*\{\s*packageName\.set\("template\.shared"\)\s*}\s*}\s*}\s*/
+            replaceTextInFile(
+                    fileName,
+                    pluginSetupRegex,
+                    ''
+            )
+
+            removeTextFromFile(fileName, "sqldelight")
+
+            project.delete("$rootDir/shared/src/commonMain/kotlin/template/shared/data/local/DatabaseDriverFactory.kt")
+            project.delete("$rootDir/shared/src/androidMain/kotlin/template/shared/data/local/DatabaseDriverFactory.android.kt")
+            project.delete("$rootDir/shared/src/iosMain/kotlin/template/shared/data/local/DatabaseDriverFactory.ios.kt")
+            project.delete("$rootDir/shared/src/commonMain/sqldelight/template/shared/AppDatabase.sq")
+        }
+
+        if (renameConfig.useMultiplatformSettings != true) {
+            println("Removing multiplatform settings")
+            removeTextFromFile(fileName, "multiplatformSettings")
+            removeTextFromFile(fileName, "multiplatform-settings")
+            removeTextFromFile(fileName, "multiplatform.settings")
+        }
+
+        if (renameConfig.useKtor != true) {
+            println("Removing ktor dependencies")
+            removeTextFromFile(fileName, "ktor")
+            removeTextFromFile(fileName, "kotlinx-serialization")
+            removeTextFromFile(fileName, "kotlinx.serialization")
+
+            project.delete("$rootDir/shared/src/commonMain/kotlin/template/shared/data/remote/BaseKtorClient.kt")
+        }
+
+        if (renameConfig.useKoin != true) {
+            println("Removing koin dependencies")
+            removeTextFromFile(fileName, "koin")
+        }
+
+        if (renameConfig.useApollo != true) {
+            println("Removing apollo dependencies")
+
+            def pluginSetupRegex = /apollo\s*\{\s*service\("service"\)\s*\{\s*packageName\.set\("template\.shared"\)\s*\}\s*\}\s*/
+            replaceTextInFile(
+                    fileName,
+                    pluginSetupRegex,
+                    ''
+            )
+
+            removeTextFromFile(fileName, "apollo")
+
+            project.delete("$rootDir/shared/src/commonMain/graphql")
+        }
+
+        if (renameConfig.useCoil != true) {
+            println("Removing coil dependencies")
+            removeTextFromFile(fileName, "coil")
+        }
+    }
+}
+
+static def deleteSetupCode(project) {
+    def rootDir = project.rootDir
+
+    def workflowsFolder = "$rootDir/.github/workflows"
+    def buildscriptsFolder = "$rootDir/buildscripts"
     def templateChangeWorkflowFile = "$workflowsFolder/template_change_test.yml"
     def macosHooksWorkflowFile = "$workflowsFolder/install_git_hooks_macos.yml"
     def windowsHooksWorkflowFile = "$workflowsFolder/install_git_hooks_windows.yml"
     def setupGradle = "$buildscriptsFolder/setup.gradle"
-    def renovateFile = "${rootDir}/renovate.json"
 
-    doLast {
-        removeTextFromFile("${rootDir}/build.gradle.kts", "setup.gradle")
-        delete(templateChangeWorkflowFile)
-        delete(macosHooksWorkflowFile)
-        delete(windowsHooksWorkflowFile)
-        delete(setupGradle)
-
-        if (renameConfig.useRenovate != true) {
-            println("Removing renovate dependencies")
-            delete(renovateFile)
-        }
-    }
-}
-
-task renameAppPackage(type: Copy) {
-    description "Renames the template package in the app module."
-    group null
-
-    def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
-    def startingDirectory = "${rootDir}/androidApp/src/main/java/${renameConfig.templateName}"
-    def endingDirectory = "${rootDir}/androidApp/src/main/java/${newPackageAsDirectory}"
-
-    from(startingDirectory)
-    into(endingDirectory)
-
-    // Replace package statements
-    filter { line ->
-        line.replaceAll(
-                "package ${renameConfig.templateName}",
-                "package ${renameConfig.newPackage}"
-        )
-    }
-
-    // Replace import statements
-    filter { line ->
-        line.replaceAll(
-                "import ${renameConfig.templateName}",
-                "import ${renameConfig.newPackage}"
-        )
-    }
-
-    // Replace Theme references. We can just replace on name,
-    // which covers both imports and function calls.
-    filter { line ->
-        line.replaceAll(
-                "${renameConfig.templateMaterialThemeName}",
-                "${renameConfig.newMaterialThemeName}"
-        )
-    }
-
-    // Replace application class references
-    filter { line ->
-        line.replaceAll(
-                "${renameConfig.templateApplicationClassName}",
-                "${renameConfig.newApplicationClassName}",
-        )
-    }
-
-    rename { fileName ->
-        if (fileName.contains("${renameConfig.templateApplicationClassName}")) {
-            fileName.replace(
-                    "${renameConfig.templateApplicationClassName}",
-                    "${renameConfig.newApplicationClassName}",
-            )
-        } else {
-            fileName
-        }
-    }
-
-    doLast {
-        delete(startingDirectory)
-    }
-}
-
-task renameSharedAndroidPackage(type: Copy) {
-    description "Renames the template package in the shared/androidMain module."
-    group null
-
-    def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
-    def startingBase = "${rootDir}/shared/src/androidMain/kotlin/${renameConfig.templateName}"
-    def startingDirectory = "$startingBase/shared"
-    def endingDirectory = "${rootDir}/shared/src/androidMain/kotlin/${newPackageAsDirectory}/shared"
-
-    from(startingDirectory)
-    into(endingDirectory)
-
-    // Replace package statements
-    filter { line ->
-        line.replaceAll(
-                "package ${renameConfig.templateName}",
-                "package ${renameConfig.newPackage}"
-        )
-    }
-
-    // Replace import statements
-    filter { line ->
-        line.replaceAll(
-                "import ${renameConfig.templateName}",
-                "import ${renameConfig.newPackage}"
-        )
-    }
-
-    // Replace Theme references. We can just replace on name,
-    // which covers both imports and function calls.
-    filter { line ->
-        line.replaceAll(
-                "${renameConfig.templateMaterialThemeName}",
-                "${renameConfig.newMaterialThemeName}"
-        )
-    }
-
-    // Replace application class references
-    filter { line ->
-        line.replaceAll(
-                "${renameConfig.templateApplicationClassName}",
-                "${renameConfig.newApplicationClassName}",
-        )
-    }
-
-    rename { fileName ->
-        if (fileName.contains("${renameConfig.templateApplicationClassName}")) {
-            fileName.replace(
-                    "${renameConfig.templateApplicationClassName}",
-                    "${renameConfig.newApplicationClassName}",
-            )
-        } else {
-            fileName
-        }
-    }
-
-    doLast {
-        delete(startingBase)
-    }
-}
-
-task renameSharedIOSPackage(type: Copy) {
-    description "Renames the template package in the shared/iosMain module."
-    group null
-
-    def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
-    def startingBase = "${rootDir}/shared/src/iosMain/kotlin/${renameConfig.templateName}"
-    def startingDirectory = "$startingBase/shared"
-    def endingDirectory = "${rootDir}/shared/src/iosMain/kotlin/${newPackageAsDirectory}/shared"
-
-    from(startingDirectory)
-    into(endingDirectory)
-
-    // Replace package statements
-    filter { line ->
-        line.replaceAll(
-                "package ${renameConfig.templateName}",
-                "package ${renameConfig.newPackage}"
-        )
-    }
-
-    // Replace import statements
-    filter { line ->
-        line.replaceAll(
-                "import ${renameConfig.templateName}",
-                "import ${renameConfig.newPackage}"
-        )
-    }
-
-    // Replace Theme references. We can just replace on name,
-    // which covers both imports and function calls.
-    filter { line ->
-        line.replaceAll(
-                "${renameConfig.templateMaterialThemeName}",
-                "${renameConfig.newMaterialThemeName}"
-        )
-    }
-
-    // Replace application class references
-    filter { line ->
-        line.replaceAll(
-                "${renameConfig.templateApplicationClassName}",
-                "${renameConfig.newApplicationClassName}",
-        )
-    }
-
-    rename { fileName ->
-        if (fileName.contains("${renameConfig.templateApplicationClassName}")) {
-            fileName.replace(
-                    "${renameConfig.templateApplicationClassName}",
-                    "${renameConfig.newApplicationClassName}",
-            )
-        } else {
-            fileName
-        }
-    }
-
-    doLast {
-        delete(startingBase)
-    }
-}
-
-task renameSharedSqldelightDirectory(type: Copy) {
-    description "Renames the directory for the shared sqldelight code."
-    group null
-
-    def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
-    def startingBase = "${rootDir}/shared/src/commonMain/sqldelight/${renameConfig.templateName}"
-    def startingDirectory = "$startingBase/shared"
-    def endingDirectory = "${rootDir}/shared/src/commonMain/sqldelight/${newPackageAsDirectory}/shared"
-
-    from(startingDirectory)
-    into(endingDirectory)
-
-    doLast {
-        delete(startingBase)
-    }
-}
-
-task renameSharedGraphqlDirectory(type: Copy) {
-    description "Renames the directory for the shared graphql code."
-    group null
-
-    def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
-    def startingBase = "${rootDir}/shared/src/commonMain/graphql/${renameConfig.templateName}"
-    def startingDirectory = "$startingBase/shared"
-    def endingDirectory = "${rootDir}/shared/src/commonMain/graphql/${newPackageAsDirectory}/shared"
-
-    from(startingDirectory)
-    into(endingDirectory)
-
-    doLast {
-        delete(startingBase)
-    }
-}
-
-task renameSharedCommonPackage(type: Copy) {
-    description "Renames the template package in the shared/commonMain module."
-    group null
-
-    def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
-    def startingBase = "${rootDir}/shared/src/commonMain/kotlin/${renameConfig.templateName}"
-    def startingDirectory = "$startingBase/shared"
-    def endingDirectory = "${rootDir}/shared/src/commonMain/kotlin/${newPackageAsDirectory}/shared"
-
-    from(startingDirectory)
-    into(endingDirectory)
-
-    // Replace package statements
-    filter { line ->
-        line.replaceAll(
-                "package ${renameConfig.templateName}",
-                "package ${renameConfig.newPackage}"
-        )
-    }
-
-    // Replace import statements
-    filter { line ->
-        line.replaceAll(
-                "import ${renameConfig.templateName}",
-                "import ${renameConfig.newPackage}"
-        )
-    }
-
-    // Replace Theme references. We can just replace on name,
-    // which covers both imports and function calls.
-    filter { line ->
-        line.replaceAll(
-                "${renameConfig.templateMaterialThemeName}",
-                "${renameConfig.newMaterialThemeName}"
-        )
-    }
-
-    // Replace application class references
-    filter { line ->
-        line.replaceAll(
-                "${renameConfig.templateApplicationClassName}",
-                "${renameConfig.newApplicationClassName}",
-        )
-    }
-
-    rename { fileName ->
-        if (fileName.contains("${renameConfig.templateApplicationClassName}")) {
-            fileName.replace(
-                    "${renameConfig.templateApplicationClassName}",
-                    "${renameConfig.newApplicationClassName}",
-            )
-        } else {
-            fileName
-        }
-    }
-
-    doLast {
-        delete(startingBase)
-    }
-}
-
-task renameSharedTestPackage(type: Copy) {
-    description "Renames the template package in the shared/test module."
-    group null
-
-    def newPackageAsDirectory = renameConfig.newPackage.replaceAll("\\.", "/")
-    def startingBase = "${rootDir}/shared/src/test/kotlin/${renameConfig.templateName}"
-    def startingDirectory = "$startingBase/shared"
-    def endingDirectory = "${rootDir}/shared/src/test/kotlin/${newPackageAsDirectory}/shared"
-
-    from(startingDirectory)
-    into(endingDirectory)
-
-    // Replace package statements
-    filter { line ->
-        line.replaceAll(
-                "package ${renameConfig.templateName}",
-                "package ${renameConfig.newPackage}"
-        )
-    }
-
-    // Replace import statements
-    filter { line ->
-        line.replaceAll(
-                "import ${renameConfig.templateName}",
-                "import ${renameConfig.newPackage}"
-        )
-    }
-
-    // Replace Theme references. We can just replace on name,
-    // which covers both imports and function calls.
-    filter { line ->
-        line.replaceAll(
-                "${renameConfig.templateMaterialThemeName}",
-                "${renameConfig.newMaterialThemeName}"
-        )
-    }
-
-    doLast {
-        delete(startingBase)
-    }
-}
-
-task replaceTemplateReferences {
-    description "Replaces references to template in various files."
-    group null
-
-    doLast {
-        replaceTextInFile(
-                "${rootDir}/androidApp/src/main/AndroidManifest.xml",
-                "${renameConfig.templateName}.MainActivity",
-                "${renameConfig.newPackage}.MainActivity",
-        )
-
-        replaceTextInFile(
-                "${rootDir}/androidApp/src/main/AndroidManifest.xml",
-                ".${renameConfig.templateApplicationClassName}",
-                ".${renameConfig.newApplicationClassName}",
-        )
-
-        replaceTextInFile(
-                "${rootDir}/androidApp/build.gradle.kts",
-                "namespace = \"${renameConfig.templateName}\"",
-                "namespace = \"${renameConfig.newPackage}\"",
-        )
-
-        replaceTextInFile(
-                "${rootDir}/androidApp/build.gradle.kts",
-                "applicationId = \"${renameConfig.templateAppId}\"",
-                "applicationId = \"${renameConfig.newPackage}\"",
-        )
-
-        replaceTextInFile(
-                "${rootDir}/settings.gradle.kts",
-                "rootProject.name = \"${renameConfig.templateName}\"",
-                "rootProject.name = \"${renameConfig.newProjectName}\"",
-        )
-
-        replaceTextInFile(
-                "${rootDir}/androidApp/src/main/res/values/strings.xml",
-                "<string name=\"app_name\">${renameConfig.templateName}</string>",
-                "<string name=\"app_name\">${renameConfig.newProjectName}</string>",
-        )
-
-        replaceTextInFile(
-                "${rootDir}/shared/build.gradle.kts",
-                "namespace = \"${renameConfig.templateName}.shared\"",
-                "namespace = \"${renameConfig.newPackage}.shared\"",
-        )
-
-        replaceTextInFile(
-                "${rootDir}/shared/build.gradle.kts",
-                "packageOfResClass = \"${renameConfig.templateName}.shared\"",
-                "packageOfResClass = \"${renameConfig.newPackage}.shared\"",
-        )
-
-        replaceTextInFile(
-                "${rootDir}/shared/build.gradle.kts",
-                "packageName.set\\(\"${renameConfig.templateName}.shared\"\\)",
-                "packageName.set\\(\"${renameConfig.newPackage}.shared\"\\)"
-        )
-    }
-}
-
-task keepOrRemoveDependencies {
-    description "Keeps or removes certain dependencies defined in renameConfig."
-    group null
-
-    doLast {
-        def filesWithDependencies = [
-                "${rootDir}/build.gradle.kts",
-                "${rootDir}/androidApp/build.gradle.kts",
-                "${rootDir}/shared/build.gradle.kts",
-                "${rootDir}/gradle/libs.versions.toml",
-        ]
-
-        filesWithDependencies.each { fileName ->
-            if (renameConfig.usePaparazzi != true) {
-                println("Removing paparazzi dependencies")
-                removeTextFromFile(fileName, "paparazzi")
-
-                delete("${rootDir}/shared/src/test/kotlin/template/shared/PaparazziUtils.kt")
-                delete("${rootDir}/shared/src/test/kotlin/template/shared/BasePaparazziTest.kt")
-                delete("${rootDir}/.github/workflows/paparazzi_tests.yml")
-            }
-
-            if (renameConfig.useSqldelight != true) {
-                println("Removing sqldelight dependencies")
-
-                def pluginSetupRegex = /sqldelight\s*\{\s*databases\s*\{\s*create\("AppDatabase"\)\s*\{\s*packageName\.set\("template\.shared"\)\s*}\s*}\s*}\s*/
-                replaceTextInFile(
-                        fileName,
-                        pluginSetupRegex,
-                        ''
-                )
-
-                removeTextFromFile(fileName, "sqldelight")
-
-                delete("${rootDir}/shared/src/commonMain/kotlin/template/shared/data/local/DatabaseDriverFactory.kt")
-                delete("${rootDir}/shared/src/androidMain/kotlin/template/shared/data/local/DatabaseDriverFactory.android.kt")
-                delete("${rootDir}/shared/src/iosMain/kotlin/template/shared/data/local/DatabaseDriverFactory.ios.kt")
-                delete("${rootDir}/shared/src/commonMain/sqldelight/template/shared/AppDatabase.sq")
-            }
-
-            if (renameConfig.useMultiplatformSettings != true) {
-                println("Removing multiplatform settings")
-                removeTextFromFile(fileName, "multiplatformSettings")
-                removeTextFromFile(fileName, "multiplatform-settings")
-                removeTextFromFile(fileName, "multiplatform.settings")
-            }
-
-            if (renameConfig.useKtor != true) {
-                println("Removing ktor dependencies")
-                removeTextFromFile(fileName, "ktor")
-                removeTextFromFile(fileName, "kotlinx-serialization")
-                removeTextFromFile(fileName, "kotlinx.serialization")
-
-                delete("${rootDir}/shared/src/commonMain/kotlin/template/shared/data/remote/BaseKtorClient.kt")
-            }
-
-            if (renameConfig.useKoin != true) {
-                println("Removing koin dependencies")
-                removeTextFromFile(fileName, "koin")
-            }
-
-            if (renameConfig.useApollo != true) {
-                println("Removing apollo dependencies")
-
-                def pluginSetupRegex = /apollo\s*\{\s*service\("service"\)\s*\{\s*packageName\.set\("template\.shared"\)\s*\}\s*\}\s*/
-                replaceTextInFile(
-                        fileName,
-                        pluginSetupRegex,
-                        ''
-                )
-
-                removeTextFromFile(fileName, "apollo")
-
-                delete("${rootDir}/shared/src/commonMain/graphql")
-            }
-
-            if (renameConfig.useCoil != true) {
-                println("Removing coil dependencies")
-                removeTextFromFile(fileName, "coil")
-            }
-        }
-    }
-}
-
-task renameIOSUITests(type: Copy) {
-    description "Renames the IOSUITests directory."
-    group null
-
-    def startingDirectory = "${rootDir}/iosApp/${renameConfig.templateIOSName}UITests"
-    def endingDirectory = "${rootDir}/iosApp/${renameConfig.newIOSName}UITests"
-
-    from(startingDirectory)
-    into(endingDirectory)
-
-    filter { line ->
-        line.replaceAll(
-                renameConfig.templateIOSName,
-                renameConfig.newIOSName
-        )
-    }
-
-    rename { filename ->
-        filename.replace renameConfig.templateIOSName, renameConfig.newIOSName
-    }
-
-    doLast {
-        delete(startingDirectory)
-    }
-}
-
-task renameIOSTests(type: Copy) {
-    description "Renames the IOSTests directory."
-    group null
-
-    def startingDirectory = "${rootDir}/iosApp/${renameConfig.templateIOSName}Tests"
-    def endingDirectory = "${rootDir}/iosApp/${renameConfig.newIOSName}Tests"
-
-    from(startingDirectory)
-    into(endingDirectory)
-
-    filter { line ->
-        line.replaceAll(
-                renameConfig.templateIOSName,
-                renameConfig.newIOSName
-        )
-    }
-
-    rename { filename ->
-        filename.replace renameConfig.templateIOSName, renameConfig.newIOSName
-    }
-
-    doLast {
-        delete(startingDirectory)
-    }
-}
-
-task renameIOSFolder(type: Copy) {
-    description "Renames the IOS Content folder."
-    group null
-
-    def startingDirectory = "${rootDir}/iosApp/${renameConfig.templateIOSName}"
-    def endingDirectory = "${rootDir}/iosApp/${renameConfig.newIOSName}"
-
-    from(startingDirectory)
-    into(endingDirectory)
-
-    filter { line ->
-        line.replaceAll(
-                renameConfig.templateIOSName,
-                renameConfig.newIOSName
-        )
-    }
-
-    rename { filename ->
-        filename.replace renameConfig.templateIOSName, renameConfig.newIOSName
-    }
-
-    doLast {
-        delete(startingDirectory)
-    }
-}
-
-task renameXcodeproject(type: Copy) {
-    description "Renames the IOS xcodeproject folder."
-    group null
-
-    def startingDirectory = "${rootDir}/iosApp/${renameConfig.templateIOSName}.xcodeproj"
-    def endingDirectory = "${rootDir}/iosApp/${renameConfig.newIOSName}.xcodeproj"
-
-    from(startingDirectory)
-    into(endingDirectory)
-
-    filter { line ->
-        line.replaceAll(
-                renameConfig.templateIOSName,
-                renameConfig.newIOSName
-        )
-    }
-
-    rename { filename ->
-        filename.replace renameConfig.templateIOSName, renameConfig.newIOSName
-    }
-
-    doLast {
-        delete(startingDirectory)
-    }
-}
-
-task renameIOSBuildWorkflow() {
-    description "Renames the ios_build Github Action workflow."
-    group null
-
-    doLast {
-        replaceTextInFile(
-                "${rootDir}/.github/workflows/ios_build.yml",
-                renameConfig.templateIOSName,
-                renameConfig.newIOSName
-        )
-    }
-}
-
-task renameIOSApp {
-    description "Rename the iOS application based on the renameConfig."
-    group "Template Setup"
-
-    dependsOn(
-            renameIOSUITests,
-            renameIOSTests,
-            renameIOSFolder,
-            renameXcodeproject,
-            renameIOSBuildWorkflow
-    )
-}
-
-task renameTemplate {
-    description "Runs all of the necessary template setup tasks based on the renameConfig."
-    group "Template Setup"
-
-    dependsOn(
-            keepOrRemoveDependencies,
-            renameAppPackage,
-            renameSharedAndroidPackage,
-            renameSharedIOSPackage,
-            renameSharedCommonPackage,
-            renameSharedTestPackage,
-            renameSharedSqldelightDirectory,
-            renameSharedGraphqlDirectory,
-            replaceTemplateReferences,
-            renameIOSApp,
-            deleteSetupCode,
-    )
-
-    doLast {
-        exec {
-            // Format code after template changes, this matters because ktlint expects
-            // alphabetical imports.
-            commandLine "./gradlew", "formatKotlin"
-
-            // After all setup changes happen, run a `git add` so
-            // folks can just immediately commit and push if they wish.
-            commandLine "git", "add", "${rootDir}/."
-        }
-    }
+    removeTextFromFile("$rootDir/build.gradle.kts", "setup.gradle")
+    project.delete(templateChangeWorkflowFile)
+    project.delete(macosHooksWorkflowFile)
+    project.delete(windowsHooksWorkflowFile)
+    project.delete(setupGradle)
 }
 
 /**
