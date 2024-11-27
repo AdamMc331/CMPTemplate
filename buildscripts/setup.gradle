@@ -147,7 +147,7 @@ task renameTemplate(type: Copy) {
     doLast {
         replaceTemplateReferences(rootDir, renameConfig)
         keepOrRemoveDependencies(rootDir, renameConfig)
-        deleteSetupCode(rootDir)
+        deleteSetupCode(project)
         delete("$rootDir/androidApp/src/main/java/$templateName")
         delete("$rootDir/shared/src/androidMain/kotlin/$templateName")
         delete("$rootDir/shared/src/iosMain/kotlin/$templateName")
@@ -295,7 +295,9 @@ static def keepOrRemoveDependencies(rootDir, renameConfig) {
     }
 }
 
-static def deleteSetupCode(rootDir) {
+static def deleteSetupCode(project) {
+    def rootDir = project.rootDir
+
     def workflowsFolder = "$rootDir/.github/workflows"
     def buildscriptsFolder = "$rootDir/buildscripts"
     def templateChangeWorkflowFile = "$workflowsFolder/template_change_test.yml"
@@ -304,10 +306,10 @@ static def deleteSetupCode(rootDir) {
     def setupGradle = "$buildscriptsFolder/setup.gradle"
 
     removeTextFromFile("$rootDir/build.gradle.kts", "setup.gradle")
-    delete(templateChangeWorkflowFile)
-    delete(macosHooksWorkflowFile)
-    delete(windowsHooksWorkflowFile)
-    delete(setupGradle)
+    project.delete(templateChangeWorkflowFile)
+    project.delete(macosHooksWorkflowFile)
+    project.delete(windowsHooksWorkflowFile)
+    project.delete(setupGradle)
 }
 
 /**
