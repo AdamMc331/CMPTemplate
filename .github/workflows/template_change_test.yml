@@ -14,6 +14,7 @@ on: pull_request
 jobs:
   rename-template:
     strategy:
+      fail-fast: false
       matrix:
         keepCustomizableDependencies: [true, false]
 
