@@ -11,6 +11,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -55,6 +57,7 @@ kotlin {
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.multiplatform.settings.noArg)
+            implementation(libs.androidx.room.runtime)
         }
 
         androidMain.dependencies {
@@ -73,6 +76,10 @@ kotlin {
             implementation(libs.koin.test)
         }
     }
+}
+
+dependencies {
+    ksp(libs.androidx.room.compiler)
 }
 
 compose.resources {
@@ -105,6 +112,10 @@ sqldelight {
             packageName.set("template.shared")
         }
     }
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 // NOTE: Replace the template schema.json with the schema for your apollo api.
