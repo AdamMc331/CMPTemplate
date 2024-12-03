@@ -17,7 +17,6 @@ def renameConfig = [
         useKtor                     : true,
         useKoin                     : true,
         useApollo                   : true,
-        useCoil                     : true,
 ]
 
 task renameIOSProject(type: Copy) {
@@ -310,11 +309,6 @@ static def keepOrRemoveDependencies(project, renameConfig) {
             removeTextFromFile(fileName, "apollo")
 
             project.delete("$rootDir/shared/src/commonMain/graphql")
-        }
-
-        if (renameConfig.useCoil != true) {
-            println("Removing coil dependencies")
-            removeTextFromFile(fileName, "coil")
         }
     }
 }
