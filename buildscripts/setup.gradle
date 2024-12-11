@@ -82,6 +82,7 @@ def tasksToExclude = [
         "copyNonXmlValueResourcesForCommonMain",
         "generateCommonMainAppDatabaseInterface",
         "generateActualResourceCollectorsForAndroidMain",
+        "prepareComposeResourcesTaskForCommonMain",
 ]
 
 project('shared').tasks.named {
