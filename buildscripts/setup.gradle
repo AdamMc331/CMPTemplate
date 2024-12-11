@@ -95,6 +95,17 @@ project('shared').tasks.named {
     }
 }
 
+// If we're running the `renameTemplate` task, exclude
+// the `generateCommonMainAppDatabaseInterface` task from running.
+// TODO: Still need to understand why this is even called.
+project('shared').tasks.named {
+    it == "generateCommonMainAppDatabaseInterface"
+}.configureEach {
+    onlyIf {
+        !project.gradle.startParameter.taskNames.contains("renameTemplate")
+    }
+}
+
 task renameTemplate(type: Copy) {
     dependsOn(renameIOSProject)
 
