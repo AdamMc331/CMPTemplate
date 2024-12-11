@@ -41,7 +41,7 @@ The dependencies in the template include:
 * [GitHub Actions](/documentation/GitHubActions.md) for running continuous integration and ensuring code quality with every PR.
 * [LeakCanary](https://square.github.io/leakcanary/) for detecting memory leaks.
 * [SQLDelight](https://cashapp.github.io/sqldelight/2.0.2/multiplatform_sqlite/) for local databases, which can be removed via setup.gradle if necessary.
-* [Multiplatform Settings](https://github.com/russhwolf/multiplatform-settings) for local Key-Value storage, which can be removed via setup.gradle if necessary.
+* [Data Store](https://developer.android.com/kotlin/multiplatform/datastore) for local preference storage, which can be removed via setup.gradle if necessary.
 * [Ktor](https://ktor.io/docs/client-create-multiplatform-application.html) for networking, which can be removed via setup.gradle if necessary.
 
 ### Danger
