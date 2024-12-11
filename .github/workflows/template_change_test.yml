@@ -26,10 +26,6 @@ jobs:
         run: |
           sed -i '' 's/useSqldelight.* : true/useSqldelight : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
 
-      - name: Set useMultiplatformSettings
-        run: |
-          sed -i '' 's/useMultiplatformSettings.* : true/useMultiplatformSettings : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
-
       - name: Set useKtor
         run: |
           sed -i '' 's/useKtor.* : true/useKtor : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
