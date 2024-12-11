@@ -1,4 +1,4 @@
-package template.shared.data.local
+package template.shared.data.preferences
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
