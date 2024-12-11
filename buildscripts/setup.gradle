@@ -87,7 +87,7 @@ def tasksToExclude = [
 
 project('shared').tasks.named { taskName ->
     tasksToExclude.any { excludeName ->
-        taskName.startsWith(excludeName)
+        taskName == excludeName || taskName.startsWith(excludeName)
     }
 }.configureEach {
     onlyIf {
