@@ -73,33 +73,19 @@ project('shared').tasks.named {
     mustRunAfter(rootProject.tasks.named("renameTemplate"))
 }
 
-// If we're running the `renameTemplate` task, exclude
-// the `generateServiceApolloSources` task from running.
-// TODO: Still need to understand why this is even called.
-project('shared').tasks.named {
-    it == "generateServiceApolloSources"
-}.configureEach {
-    onlyIf {
-        !project.gradle.startParameter.taskNames.contains("renameTemplate")
-    }
-}
+// The following tasks appear to be added to the task graph
+// for the rename template flow but we don't actually want them to run when
+// we're doing the rename process. I haven't figured out why they're included,
+// but this ensures they only run when we're NOT calling renameTemplate.
+def tasksToExclude = listOf(
+        "generateServiceApolloSources",
+        "copyNonXmlValueResourcesForCommonMain",
+        "generateCommonMainAppDatabaseInterface",
+        generateActualResourceCollectorsForAndroidMain
+)
 
-// If we're running the `renameTemplate` task, exclude
-// the `copyNonXmlValueResourcesForCommonMain` task from running.
-// TODO: Still need to understand why this is even called.
 project('shared').tasks.named {
-    it == "copyNonXmlValueResourcesForCommonMain"
-}.configureEach {
-    onlyIf {
-        !project.gradle.startParameter.taskNames.contains("renameTemplate")
-    }
-}
-
-// If we're running the `renameTemplate` task, exclude
-// the `generateCommonMainAppDatabaseInterface` task from running.
-// TODO: Still need to understand why this is even called.
-project('shared').tasks.named {
-    it == "generateCommonMainAppDatabaseInterface"
+    tasksToExclude.contains(it)
 }.configureEach {
     onlyIf {
         !project.gradle.startParameter.taskNames.contains("renameTemplate")
