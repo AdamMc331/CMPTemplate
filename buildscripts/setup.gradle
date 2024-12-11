@@ -276,13 +276,6 @@ static def keepOrRemoveDependencies(project, renameConfig) {
             project.delete("$rootDir/shared/src/commonMain/sqldelight/template/shared/AppDatabase.sq")
         }
 
-        if (renameConfig.useMultiplatformSettings != true) {
-            println("Removing multiplatform settings")
-            removeTextFromFile(fileName, "multiplatformSettings")
-            removeTextFromFile(fileName, "multiplatform-settings")
-            removeTextFromFile(fileName, "multiplatform.settings")
-        }
-
         if (renameConfig.useKtor != true) {
             println("Removing ktor dependencies")
             removeTextFromFile(fileName, "ktor")
