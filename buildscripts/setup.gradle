@@ -62,7 +62,7 @@ project('androidApp').tasks.named {
     // like formatKotlinMain, formatKotlinTest, etc.
     it.startsWith("formatKotlin")
 }.configureEach {
-    dependsOn(rootProject.tasks.named("renameTemplate"))
+    mustRunAfter(rootProject.tasks.named("renameTemplate"))
 }
 
 project('shared').tasks.named {
@@ -70,11 +70,12 @@ project('shared').tasks.named {
     // like formatKotlinMain, formatKotlinTest, etc.
     it.startsWith("formatKotlin")
 }.configureEach {
-    dependsOn(rootProject.tasks.named("renameTemplate"))
+    mustRunAfter(rootProject.tasks.named("renameTemplate"))
 }
 
 // If we're running the `renameTemplate` task, exclude
 // the `generateServiceApolloSources` task from running.
+// TODO: Still need to understand why this is even called.
 project('shared').tasks.named {
     it == "generateServiceApolloSources"
 }.configureEach {
