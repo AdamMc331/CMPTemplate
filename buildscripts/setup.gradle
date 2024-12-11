@@ -57,6 +57,22 @@ task renameIOSProject(type: Copy) {
     }
 }
 
+project('androidApp').tasks.named {
+    // startsWith is used because this applies to multiple tasks,
+    // like formatKotlinMain, formatKotlinTest, etc.
+    it.startsWith("formatKotlin")
+}.configureEach {
+    dependsOn(rootProject.tasks.named("renameTemplate"))
+}
+
+project('shared').tasks.named {
+    // startsWith is used because this applies to multiple tasks,
+    // like formatKotlinMain, formatKotlinTest, etc.
+    it.startsWith("formatKotlin")
+}.configureEach {
+    dependsOn(rootProject.tasks.named("renameTemplate"))
+}
+
 task renameTemplate(type: Copy) {
     dependsOn(renameIOSProject)
 
@@ -171,6 +187,8 @@ task renameTemplate(type: Copy) {
             commandLine "git", "add", "$rootDir/."
         }
     }
+
+    finalizedBy("androidApp:formatKotlin", "shared:formatKotlin")
 }
 
 static def replaceTemplateReferences(rootDir, renameConfig) {
