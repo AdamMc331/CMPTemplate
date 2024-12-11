@@ -40,7 +40,6 @@ The dependencies in the template include:
 * [Gradle Versions Plugin](/documentation/VersionsPlugin.md) for checking all dependencies for new versions.
 * [GitHub Actions](/documentation/GitHubActions.md) for running continuous integration and ensuring code quality with every PR.
 * [LeakCanary](https://square.github.io/leakcanary/) for detecting memory leaks.
-* [Paparazzi](https://github.com/cashapp/paparazzi) for snapshot testing, which can be removed via setup.gradle if necessary.
 * [SQLDelight](https://cashapp.github.io/sqldelight/2.0.2/multiplatform_sqlite/) for local databases, which can be removed via setup.gradle if necessary.
 * [Multiplatform Settings](https://github.com/russhwolf/multiplatform-settings) for local Key-Value storage, which can be removed via setup.gradle if necessary.
 * [Ktor](https://ktor.io/docs/client-create-multiplatform-application.html) for networking, which can be removed via setup.gradle if necessary.
@@ -48,7 +47,7 @@ The dependencies in the template include:
 ### Danger
 
 This template uses [Danger](https://danger.systems) which will perform some checks against our 
-pull requests. You can find the list of checks in the [Dangerfile](Dangerfile). In addition, we 
+pull requests. You can find the list of checks in the [Dangerfile](Dangerfile.df.kts). In addition, we 
 have a GitHub Actions workflow for Danger checks. 
 
 > [!IMPORTANT]

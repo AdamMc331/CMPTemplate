@@ -1,4 +1,10 @@
-name: Paparazzi Tests
+name: Desktop Build
+
+# This will cancel any in progress workflows for the same PR, if
+# multiple pushes happen in quick succession.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 # This will cancel any in progress workflows for the same PR, if
 # multiple pushes happen in quick succession.
@@ -9,7 +15,7 @@ concurrency:
 on: pull_request
 
 jobs:
-  paparazzi-tests:
+  android-build:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
@@ -26,5 +32,5 @@ jobs:
           # Only write to the cache for builds on the 'development' branch
           cache-read-only: ${{ github.ref != 'refs/heads/development' }}
 
-      - name: Run Tests
-        run: ./gradlew verifyPaparazziDebug
+      - name: Build Project
+        run: ./gradlew :desktopApp:build

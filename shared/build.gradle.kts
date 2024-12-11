@@ -6,7 +6,6 @@ import org.jmailen.gradle.kotlinter.tasks.LintTask
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.apollo.graphql)
-    alias(libs.plugins.cash.paparazzi)
     alias(libs.plugins.cash.sqldelight)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.compose)
@@ -33,6 +32,8 @@ kotlin {
         }
     }
 
+    jvm("desktop")
+
     sourceSets {
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -41,6 +42,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation(libs.androidx.datastore.preferences)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.apollo.runtime)

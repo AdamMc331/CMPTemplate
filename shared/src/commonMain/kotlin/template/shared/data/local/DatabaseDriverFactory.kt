@@ -1,4 +1,4 @@
-package template.shared
+package template.shared.data.local
 
 import app.cash.sqldelight.db.SqlDriver
 

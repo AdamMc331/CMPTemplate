@@ -2,8 +2,6 @@
 //  templateIOSTests.swift
 //  templateIOSTests
 //
-//  Created by Adam McNeilly on 9/24/24.
-//
 
 import XCTest
 @testable import templateIOS
