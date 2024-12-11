@@ -81,7 +81,7 @@ def tasksToExclude = listOf(
         "generateServiceApolloSources",
         "copyNonXmlValueResourcesForCommonMain",
         "generateCommonMainAppDatabaseInterface",
-        generateActualResourceCollectorsForAndroidMain
+        "generateActualResourceCollectorsForAndroidMain",
 )
 
 project('shared').tasks.named {
