@@ -73,6 +73,16 @@ project('shared').tasks.named {
     dependsOn(rootProject.tasks.named("renameTemplate"))
 }
 
+// If we're running the `renameTemplate` task, exclude
+// the `generateServiceApolloSources` task from running.
+project('shared').tasks.named {
+    it == "generateServiceApolloSources"
+}.configureEach {
+    onlyIf {
+        !project.gradle.startParameter.taskNames.contains("renameTemplate")
+    }
+}
+
 task renameTemplate(type: Copy) {
     dependsOn(renameIOSProject)
 
