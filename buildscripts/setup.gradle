@@ -78,7 +78,7 @@ project('shared').tasks.named {
 // at the end.
 project('shared').tasks.named {
     it == "generateServiceApolloSources"
-}.configure {
+}.configureEach {
     dependsOn(rootProject.tasks.named("renameTemplate"))
     dependsOn(rootProject.tasks.named("renameIOSProject"))
 }
