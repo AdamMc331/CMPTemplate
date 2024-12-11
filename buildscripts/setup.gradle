@@ -76,7 +76,9 @@ project('shared').tasks.named {
 // No idea why this is being run in the renameTemplate task flow,
 // but this is necessary depends on setup in order for formatting flow to run
 // at the end.
-project('shared').tasks.named('generateServiceApolloSources').configure {
+project('shared').tasks.named {
+    it == "generateServiceApolloSources"
+}.configure {
     dependsOn(rootProject.tasks.named("renameTemplate"))
     dependsOn(rootProject.tasks.named("renameIOSProject"))
 }
