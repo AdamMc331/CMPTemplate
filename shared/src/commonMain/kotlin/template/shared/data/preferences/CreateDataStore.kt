@@ -8,8 +8,12 @@ import okio.Path.Companion.toPath
 /**
  * Platform agnostic function to create a [DataStore] instance.
  *
- * @param[producePath] A lambda to create a path to the preference file.
- *  This is provided as the path to the file is platform specific.
+ * Each platform will call this and provide their own [producePath] lambda
+ * to look up the preference file based on the platform's standards.
+ *
+ * NOTE FOR TEMPLATE USERS:
+ * Each platform has a `CreateDataStore.platform.kt` file that creates a DataStore.
+ * You can choose to inject that by using whatever framework you prefer (expect/actual, koin, etc)
  */
 fun createDataStore(
     producePath: () -> String,
@@ -19,4 +23,8 @@ fun createDataStore(
     )
 }
 
+/**
+ * NOTE FOR TEMPLATE USERS:
+ * Update the name of the preference file after cloning this template.
+ */
 const val DATA_STORE_FILE_NAME = "TODO.preferences_pb"

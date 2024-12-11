@@ -10,6 +10,10 @@ import platform.Foundation.NSUserDomainMask
 import template.shared.data.preferences.DATA_STORE_FILE_NAME
 import template.shared.data.preferences.createDataStore
 
+/**
+ * On iOS, we create the [DataStore] implementation by looking up
+ * the preference file using [NSFileManager].
+ */
 @OptIn(ExperimentalForeignApi::class)
 fun createIosDataStore(): DataStore<Preferences> {
     return createDataStore(
