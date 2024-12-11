@@ -79,7 +79,7 @@ project('shared').tasks.named {
 // but this ensures they only run when we're NOT calling renameTemplate.
 def tasksToExclude = [
         "generateServiceApolloSources",
-        "copyNonXmlValueResources",
+        "copyNonXmlValueResourcesForCommonMain",
         "generateCommonMainAppDatabaseInterface",
         "generateActualResourceCollectorsForAndroidMain",
         "generateActualResourceCollectorsForCommonMain",
