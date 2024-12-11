@@ -11,6 +11,7 @@ def renameConfig = [
         newMaterialThemeName        : "MyMaterialTheme",
         newApplicationClassName     : "MyApp",
         newIOSName                  : "myIOS",
+        useDataStore                : true,
         useRenovate                 : true,
         useSqldelight               : true,
         useMultiplatformSettings    : true,
@@ -309,6 +310,15 @@ static def keepOrRemoveDependencies(project, renameConfig) {
             removeTextFromFile(fileName, "apollo")
 
             project.delete("$rootDir/shared/src/commonMain/graphql")
+        }
+
+        if (renameConfig.useDataStore != true) {
+            removeTextFromFile(fileName, "datastore")
+
+            project.delete("$rootDir/shared/src/commonMain/kotlin/template/shared/data/preferences/CreateDataStore.kt")
+            project.delete("$rootDir/shared/src/androidMain/kotlin/template/shared/data/preferences/CreateDataStore.android.kt")
+            project.delete("$rootDir/shared/src/iosMain/kotlin/template/shared/data/preferences/CreateDataStore.ios.kt")
+            project.delete("$rootDir/shared/src/desktopMain/kotlin/template/shared/data/preferences/CreateDataStore.desktop.kt")
         }
     }
 }

@@ -8,6 +8,7 @@ coil = "3.0.4"
 compileSdk = "34"
 composeBom = "2024.11.00"
 coroutines = "1.9.0"
+datastore = "1.1.1"
 detektGradlePlugin = "1.23.7"
 espresso = "3.6.1"
 gradleVersionsPlugin = "0.51.0"
@@ -29,6 +30,7 @@ testParameterInjector = "1.18"
 [libraries]
 android-material = { module = "com.google.android.material:material", version.ref = "material" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidxLifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
