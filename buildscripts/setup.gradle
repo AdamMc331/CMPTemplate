@@ -82,6 +82,9 @@ def tasksToExclude = [
         "copyNonXmlValueResourcesForCommonMain",
         "generateCommonMainAppDatabaseInterface",
         "generateActualResourceCollectorsForAndroidMain",
+        "generateActualResourceCollectorsForCommonMain",
+        "generateActualResourceCollectorsForDesktopMain",
+        "generateActualResourceCollectorsForIosMain",
         "prepareComposeResourcesTaskForCommonMain",
 ]
 
