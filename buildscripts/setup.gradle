@@ -87,14 +87,9 @@ def tasksToExclude = [
 ]
 
 project('shared').tasks.named { taskName ->
-    println("ADAMLOG - TASK NAME " + taskName)
-    def inList = tasksToExclude.any { excludeName ->
+    tasksToExclude.any { excludeName ->
         taskName.startsWith(excludeName)
     }
-
-    println("ADAMLOG - IN LIST: " + inList)
-
-    inList
 }.configureEach {
     onlyIf {
         !project.gradle.startParameter.taskNames.contains("renameTemplate")
@@ -216,7 +211,11 @@ task renameTemplate(type: Copy) {
         }
     }
 
-    finalizedBy("androidApp:formatKotlin", "shared:formatKotlin")
+    finalizedBy(
+            "androidApp:formatKotlin",
+            "desktopApp:formatKotlin",
+            "shared:formatKotlin",
+    )
 }
 
 static def replaceTemplateReferences(rootDir, renameConfig) {
