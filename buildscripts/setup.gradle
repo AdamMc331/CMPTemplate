@@ -84,6 +84,7 @@ def tasksToExclude = [
         "generateActualResourceCollectors",
         "prepareComposeResourcesTask",
         "generateActualResourceCollectors",
+        "generateResourceAccessors"
 ]
 
 project('shared').tasks.named { taskName ->
