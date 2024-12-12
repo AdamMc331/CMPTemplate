@@ -79,23 +79,25 @@ project('shared').tasks.named {
 // but this ensures they only run when we're NOT calling renameTemplate.
 def tasksToExclude = [
         "generateServiceApolloSources",
-        "copyNonXmlValueResourcesForCommonMain",
+        "copyNonXmlValueResources",
         "generateCommonMainAppDatabaseInterface",
-        "generateActualResourceCollectorsForAndroidMain",
-        "generateActualResourceCollectorsForCommonMain",
-        "generateActualResourceCollectorsForDesktopMain",
-        "generateActualResourceCollectorsForIosMain",
-        "prepareComposeResourcesTaskForCommonMain",
+        "generateActualResourceCollectors",
+        "prepareComposeResourcesTask",
         "generateActualResourceCollectors",
 ]
 
-afterEvaluate {
-    project('shared').tasks.named {
-        tasksToExclude.contains(it)
-    }.configureEach {
-        onlyIf {
-            !project.gradle.startParameter.taskNames.contains("renameTemplate")
-        }
+project('shared').tasks.named { taskName ->
+    println("ADAMLOG - TASK NAME " + taskName)
+    def inList = tasksToExclude.any { excludeName ->
+        taskName.startsWith(excludeName)
+    }
+
+    println("ADAMLOG - IN LIST: " + inList)
+
+    inList
+}.configureEach {
+    onlyIf {
+        !project.gradle.startParameter.taskNames.contains("renameTemplate")
     }
 }
 
