@@ -78,13 +78,12 @@ project('shared').tasks.named {
 // we're doing the rename process. I haven't figured out why they're included,
 // but this ensures they only run when we're NOT calling renameTemplate.
 def tasksToExclude = [
-        "generateServiceApolloSources",
         "copyNonXmlValueResources",
+        "generateActualResourceCollectors",
         "generateCommonMainAppDatabaseInterface",
-        "generateActualResourceCollectors",
+        "generateResourceAccessors",
+        "generateServiceApolloSources",
         "prepareComposeResourcesTask",
-        "generateActualResourceCollectors",
-        "generateResourceAccessors"
 ]
 
 project('shared').tasks.named { taskName ->
