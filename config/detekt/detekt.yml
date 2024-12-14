@@ -10,3 +10,6 @@ naming:
     functionPattern: '[a-z][a-zA-Z0-9]*'
     excludeClassPattern: '$^'
     ignoreAnnotated: ['Composable']
+  MatchingDeclarationName:
+    active: true
+    excludes: ['**/androidMain/**', '**/iosMain/**', '**/desktopMain/**']
