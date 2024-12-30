@@ -24,10 +24,7 @@ To use this template in your own project, click the "Use this template" button a
 
 To setup this repository to your needs, open the [setup.gradle](buildscripts/setup.gradle) file 
 and tweak the `renameConfig` block to your needs. After that, you can run the `renameTemplate` 
-gradle task to have the app module's package name and relevant strings replaced.
-
-> [!NOTE]
-> Note that we currently do not support auto formatting after renaming template, so you will likely want to run `./gradlew formatKotlin` as well to ensure all the imports are in alphabetical order after the rename flow. If you'd like to help fix this, see [this issue](https://github.com/AdamMc331/CMPTemplate/issues/63). 
+gradle task to have the app module's package name and relevant strings replaced. 
 
 In addition, it will clean up the relevant setup files and workflows that are specific to this template, it should not require any manual deletion work on your part.
 
@@ -44,7 +41,7 @@ The dependencies in the template include:
 * [GitHub Actions](/documentation/GitHubActions.md) for running continuous integration and ensuring code quality with every PR.
 * [LeakCanary](https://square.github.io/leakcanary/) for detecting memory leaks.
 * [SQLDelight](https://cashapp.github.io/sqldelight/2.0.2/multiplatform_sqlite/) for local databases, which can be removed via setup.gradle if necessary.
-* [Multiplatform Settings](https://github.com/russhwolf/multiplatform-settings) for local Key-Value storage, which can be removed via setup.gradle if necessary.
+* [Data Store](https://developer.android.com/kotlin/multiplatform/datastore) for local preference storage, which can be removed via setup.gradle if necessary.
 * [Ktor](https://ktor.io/docs/client-create-multiplatform-application.html) for networking, which can be removed via setup.gradle if necessary.
 
 ### Danger

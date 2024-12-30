@@ -26,10 +26,6 @@ jobs:
         run: |
           sed -i '' 's/useSqldelight.* : true/useSqldelight : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
 
-      - name: Set useMultiplatformSettings
-        run: |
-          sed -i '' 's/useMultiplatformSettings.* : true/useMultiplatformSettings : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
-
       - name: Set useKtor
         run: |
           sed -i '' 's/useKtor.* : true/useKtor : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
@@ -42,13 +38,13 @@ jobs:
         run: |
           sed -i '' 's/useApollo.* : true/useApollo : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
 
-      - name: Set useCoil
-        run: |
-          sed -i '' 's/useCoil.* : true/useCoil : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
-
       - name: Set useRenovate
         run: |
           sed -i '' 's/useRenovate.* : true/useRenovate : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
+
+      - name: Set useDataStore
+        run: |
+          sed -i '' 's/useDataStore.* : true/useDataStore : ${{ matrix.keepCustomizableDependencies }}/g' buildscripts/setup.gradle
 
       - name: Set Up JDK
         uses: actions/setup-java@v4
@@ -83,6 +79,9 @@ jobs:
           action: build
           use-xcpretty: false
           build-settings: CODE_SIGN_IDENTITY= CODE_SIGNING_REQUIRED=NO
+
+      - name: Lint Checks
+        run: ./gradlew detektAll lintKotlin lint
 
       - name: Run Tests
         run: ./gradlew test

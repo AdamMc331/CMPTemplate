@@ -6,18 +6,18 @@ def renameConfig = [
         templateApplicationClassName: "TemplateApp",
         templateIOSName             : "templateIOS",
         // MODIFY THE BELOW PROPERTIES
-        newPackage                  : "domain.yourname.app",
+        newPackage                  : "aaa.yourname.app",
         newProjectName              : "Your Project",
         newMaterialThemeName        : "MyMaterialTheme",
         newApplicationClassName     : "MyApp",
         newIOSName                  : "myIOS",
+        useDataStore                : true,
         useRenovate                 : true,
         useSqldelight               : true,
         useMultiplatformSettings    : true,
         useKtor                     : true,
         useKoin                     : true,
         useApollo                   : true,
-        useCoil                     : true,
 ]
 
 task renameIOSProject(type: Copy) {
@@ -54,6 +54,53 @@ task renameIOSProject(type: Copy) {
         delete("$rootDir/iosApp/${renameConfig.templateIOSName}")
         delete("$rootDir/iosApp/${renameConfig.templateIOSName}Tests")
         delete("$rootDir/iosApp/${renameConfig.templateIOSName}UITests")
+    }
+}
+
+project('androidApp').tasks.named {
+    // startsWith is used because this applies to multiple tasks,
+    // like formatKotlinMain, formatKotlinTest, etc.
+    it.startsWith("formatKotlin")
+}.configureEach {
+    mustRunAfter(rootProject.tasks.named("renameTemplate"))
+}
+
+project('desktopApp').tasks.named {
+    // startsWith is used because this applies to multiple tasks,
+    // like formatKotlinMain, formatKotlinTest, etc.
+    it.startsWith("formatKotlin")
+}.configureEach {
+    mustRunAfter(rootProject.tasks.named("renameTemplate"))
+}
+
+project('shared').tasks.named {
+    // startsWith is used because this applies to multiple tasks,
+    // like formatKotlinMain, formatKotlinTest, etc.
+    it.startsWith("formatKotlin")
+}.configureEach {
+    mustRunAfter(rootProject.tasks.named("renameTemplate"))
+}
+
+// The following tasks appear to be added to the task graph
+// for the rename template flow but we don't actually want them to run when
+// we're doing the rename process. I haven't figured out why they're included,
+// but this ensures they only run when we're NOT calling renameTemplate.
+def tasksToExclude = [
+        "copyNonXmlValueResources",
+        "generateActualResourceCollectors",
+        "generateCommonMainAppDatabaseInterface",
+        "generateResourceAccessors",
+        "generateServiceApolloSources",
+        "prepareComposeResourcesTask",
+]
+
+project('shared').tasks.named { taskName ->
+    tasksToExclude.any { excludeName ->
+        taskName.startsWith(excludeName)
+    }
+}.configureEach {
+    onlyIf {
+        !project.gradle.startParameter.taskNames.contains("renameTemplate")
     }
 }
 
@@ -171,6 +218,12 @@ task renameTemplate(type: Copy) {
             commandLine "git", "add", "$rootDir/."
         }
     }
+
+    finalizedBy(
+            "androidApp:formatKotlin",
+            "desktopApp:formatKotlin",
+            "shared:formatKotlin",
+    )
 }
 
 static def replaceTemplateReferences(rootDir, renameConfig) {
@@ -276,13 +329,6 @@ static def keepOrRemoveDependencies(project, renameConfig) {
             project.delete("$rootDir/shared/src/commonMain/sqldelight/template/shared/AppDatabase.sq")
         }
 
-        if (renameConfig.useMultiplatformSettings != true) {
-            println("Removing multiplatform settings")
-            removeTextFromFile(fileName, "multiplatformSettings")
-            removeTextFromFile(fileName, "multiplatform-settings")
-            removeTextFromFile(fileName, "multiplatform.settings")
-        }
-
         if (renameConfig.useKtor != true) {
             println("Removing ktor dependencies")
             removeTextFromFile(fileName, "ktor")
@@ -312,9 +358,13 @@ static def keepOrRemoveDependencies(project, renameConfig) {
             project.delete("$rootDir/shared/src/commonMain/graphql")
         }
 
-        if (renameConfig.useCoil != true) {
-            println("Removing coil dependencies")
-            removeTextFromFile(fileName, "coil")
+        if (renameConfig.useDataStore != true) {
+            removeTextFromFile(fileName, "datastore")
+
+            project.delete("$rootDir/shared/src/commonMain/kotlin/template/shared/data/preferences/CreateDataStore.kt")
+            project.delete("$rootDir/shared/src/androidMain/kotlin/template/shared/data/preferences/CreateDataStore.android.kt")
+            project.delete("$rootDir/shared/src/iosMain/kotlin/template/shared/data/preferences/CreateDataStore.ios.kt")
+            project.delete("$rootDir/shared/src/desktopMain/kotlin/template/shared/data/preferences/CreateDataStore.desktop.kt")
         }
     }
 }

@@ -1,28 +1,28 @@
 [versions]
 activityCompose = "1.9.3"
-agp = "8.7.2"
+agp = "8.7.3"
 androidxLifecycle = "2.8.4"
 androidxTest = "1.2.1"
 apollo = "4.1.0"
 coil = "3.0.4"
 compileSdk = "34"
-composeBom = "2024.11.00"
-coroutines = "1.9.0"
+composeBom = "2024.12.01"
+coroutines = "1.10.1"
+datastore = "1.1.1"
 detektGradlePlugin = "1.23.7"
 espresso = "3.6.1"
 gradleVersionsPlugin = "0.51.0"
 junit = "4.13.2"
-kmpCompose = "1.7.1"
-koin = "4.0.0"
-kotlin = "2.0.21"
-kotlinter = "4.5.0"
-ksp = "2.0.21-1.0.28"
-ktor = "3.0.1"
+kmpCompose = "1.7.3"
+koin = "4.0.1"
+kotlin = "2.1.0"
+kotlinter = "5.0.1"
+ksp = "2.1.0-1.0.29"
+ktor = "3.0.3"
 leakCanary = "2.14"
 material = "1.12.0"
 minSdk = "21"
-multiplatformSettings = "1.2.0"
-room = "2.7.0-alpha11"
+room = "2.7.0-alpha12"
 sortDependencies = "0.13"
 sqldelight = "2.0.2"
 testParameterInjector = "1.18"
@@ -30,6 +30,7 @@ testParameterInjector = "1.18"
 [libraries]
 android-material = { module = "com.google.android.material:material", version.ref = "material" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidxLifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
@@ -58,7 +59,6 @@ ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
-multiplatform-settings-noArg = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "multiplatformSettings" }
 square-leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
 
 [plugins]
