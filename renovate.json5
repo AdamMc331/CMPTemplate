@@ -1,15 +1,15 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base"
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:base'
   ],
-  "packageRules": [
+  packageRules: [
     {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true
+      matchUpdateTypes: ['minor', 'patch', 'pin', 'digest'],
+      automerge: true
     }
   ],
-  "platformAutomerge": true,
+  platformAutomerge: true,
   ignorePresets: [
     // Ensure we get the latest version and are not pinned to old versions.
     'workarounds:javaLTSVersions',
