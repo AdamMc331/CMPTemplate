@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 import org.jmailen.gradle.kotlinter.tasks.FormatTask
 import org.jmailen.gradle.kotlinter.tasks.LintTask
 
@@ -71,6 +72,23 @@ kotlin {
             implementation(kotlin("test"))
             implementation(libs.google.testparameterinjector)
             implementation(libs.koin.test)
+        }
+
+        targets.configureEach {
+            val isAndroidTarget = platformType == KotlinPlatformType.androidJvm
+            compilations.configureEach {
+                compileTaskProvider.configure {
+                    compilerOptions {
+                        if (isAndroidTarget) {
+                            freeCompilerArgs.addAll(
+                                "-P",
+                                "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation" +
+                                    "=template.shared.Parcelize",
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }

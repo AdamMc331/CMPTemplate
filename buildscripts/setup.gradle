@@ -298,6 +298,12 @@ static def replaceTemplateReferences(rootDir, renameConfig) {
             "package = \"${renameConfig.templateName}\"",
             "package = \"${renameConfig.newPackage}\"",
     )
+
+    replaceTextInFile(
+            "$rootDir/shared/build.gradle.kts",
+            "=${renameConfig.templateName}.shared.Parcelize",
+            "=${renameConfig.newPackage}.shared.Parcelize",
+    )
 }
 
 static def keepOrRemoveDependencies(project, renameConfig) {
