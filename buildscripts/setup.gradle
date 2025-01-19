@@ -302,7 +302,7 @@ static def replaceTemplateReferences(rootDir, renameConfig) {
     replaceTextInFile(
             "$rootDir/shared/build.gradle.kts",
             "=${renameConfig.templateName}.shared.Parcelize",
-            "=${remameConfig.newPackage}.shared.Parcelize",
+            "=${renameConfig.newPackage}.shared.Parcelize",
     )
 }
 
