@@ -1,7 +1,7 @@
 [versions]
 activityCompose = "1.10.1"
 agp = "8.10.0"
-androidxLifecycle = "2.8.4"
+androidxLifecycle = "2.9.0"
 androidxTest = "1.2.1"
 apollo = "4.2.0"
 coil = "3.2.0"
