@@ -22,7 +22,6 @@ ktor = "3.2.3"
 leakCanary = "2.14"
 material = "1.12.0"
 minSdk = "21"
-sortDependencies = "0.14"
 sqldelight = "2.1.0"
 testParameterInjector = "1.18"
 
@@ -73,4 +72,3 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }
 parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
-square-sortDependencies = { id = "com.squareup.sort-dependencies", version.ref = "sortDependencies" }
