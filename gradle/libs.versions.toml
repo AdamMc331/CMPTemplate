@@ -21,6 +21,7 @@ ksp = "2.2.20-2.0.3"
 ktor = "3.3.0"
 leakCanary = "2.14"
 material = "1.13.0"
+material3Adaptive = "1.2.0-alpha06"
 minSdk = "21"
 sqldelight = "2.1.0"
 testParameterInjector = "1.19"
@@ -41,6 +42,7 @@ cash-sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref 
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+compose-material3-adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "material3Adaptive" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
 compose-ui-test-junit = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
