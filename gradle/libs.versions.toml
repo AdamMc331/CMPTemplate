@@ -17,12 +17,13 @@ kmpCompose = "1.9.0"
 koin = "4.1.1"
 kotlin = "2.2.20"
 kotlinter = "5.2.0"
+kotlinxDatetime = "0.7.1-0.6.x-compat"
 ksp = "2.2.20-2.0.3"
 ktor = "3.3.0"
 leakCanary = "2.14"
 material = "1.13.0"
 material3Adaptive = "1.2.0-alpha06"
-minSdk = "21"
+minSdk = "23"
 sqldelight = "2.1.0"
 testParameterInjector = "1.19"
 
@@ -51,6 +52,7 @@ junit = { module = "junit:junit", version.ref = "junit" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "coroutines" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
