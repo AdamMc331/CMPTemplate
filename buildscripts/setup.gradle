@@ -20,7 +20,7 @@ def renameConfig = [
         useApollo                   : true,
 ]
 
-task renameIOSProject(type: Copy) {
+tasks.register('renameIOSProject', Copy) {
     into(rootDir)
 
     from("iosApp/${renameConfig.templateIOSName}") {
@@ -104,7 +104,8 @@ project('shared').tasks.named { taskName ->
     }
 }
 
-task renameTemplate(type: Copy) {
+
+tasks.register('renameTemplate', Copy) {
     dependsOn(renameIOSProject)
 
     into(rootDir)
