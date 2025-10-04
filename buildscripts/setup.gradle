@@ -57,6 +57,10 @@ tasks.register('renameIOSProject', Copy) {
     }
 }
 
+project('shared').tasks.named('convertXmlValueResourcesForNativeTest').configure {
+    mustRunAfter(rootProject.tasks.named("renameTemplate"))
+}
+
 project('androidApp').tasks.named {
     // startsWith is used because this applies to multiple tasks,
     // like formatKotlinMain, formatKotlinTest, etc.
