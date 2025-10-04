@@ -214,10 +214,13 @@ tasks.register('renameTemplate', Copy) {
         delete("$rootDir/shared/src/commonMain/sqldelight/$templateName")
         delete("$rootDir/shared/src/commonMain/graphql/$templateName")
 
-        exec {
+        def execOps = services.get(ExecOperations.class)
+
+        execOps.exec {
+            workingDir rootDir
             // After all setup changes happen, run a `git add` so
             // folks can just immediately commit and push if they wish.
-            commandLine "git", "add", "$rootDir/."
+            commandLine "git", "add", "." // Using relative path "." as workingDir is set
         }
     }
 
