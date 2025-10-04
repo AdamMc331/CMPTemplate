@@ -76,7 +76,7 @@ project('desktopApp').tasks.named {
 project('shared').tasks.named {
     // startsWith is used because this applies to multiple tasks,
     // like formatKotlinMain, formatKotlinTest, etc.
-    it.startsWith("formatKotlin")
+    it.startsWith("formatKotlin") || it.contains("convertXmlValueResourcesForNativeTest")
 }.configureEach {
     mustRunAfter(rootProject.tasks.named("renameTemplate"))
 }
