@@ -57,7 +57,7 @@ tasks.register('renameIOSProject', Copy) {
     }
 }
 
-project('shared').tasks.named('convertXmlValueResourcesForNativeTest').configure {
+tasks.named(':shared:convertXmlValueResourcesForNativeTest').configure {
     mustRunAfter(rootProject.tasks.named("renameTemplate"))
 }
 
