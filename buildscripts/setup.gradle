@@ -20,7 +20,7 @@ def renameConfig = [
         useApollo                   : true,
 ]
 
-task renameIOSProject(type: Copy) {
+tasks.register('renameIOSProject', Copy) {
     into(rootDir)
 
     from("iosApp/${renameConfig.templateIOSName}") {
@@ -60,7 +60,8 @@ task renameIOSProject(type: Copy) {
 project('androidApp').tasks.named {
     // startsWith is used because this applies to multiple tasks,
     // like formatKotlinMain, formatKotlinTest, etc.
-    it.startsWith("formatKotlin")
+    // Similar to `convertXmlValueResourcesFor[...]` call.
+    it.startsWith("formatKotlin") || it.startsWith("convertXmlValueResourcesFor")
 }.configureEach {
     mustRunAfter(rootProject.tasks.named("renameTemplate"))
 }
@@ -68,7 +69,10 @@ project('androidApp').tasks.named {
 project('desktopApp').tasks.named {
     // startsWith is used because this applies to multiple tasks,
     // like formatKotlinMain, formatKotlinTest, etc.
+    // Similar to `copyNonXmlValueResourcesFor[...]` call.
     it.startsWith("formatKotlin")
+            || it.startsWith("copyNonXmlValueResources")
+            || it.startsWith("convertXmlValueResourcesFor")
 }.configureEach {
     mustRunAfter(rootProject.tasks.named("renameTemplate"))
 }
@@ -76,7 +80,8 @@ project('desktopApp').tasks.named {
 project('shared').tasks.named {
     // startsWith is used because this applies to multiple tasks,
     // like formatKotlinMain, formatKotlinTest, etc.
-    it.startsWith("formatKotlin")
+    // Similar to `convertXmlValueResourcesFor[...]` call.
+    it.startsWith("formatKotlin") || it.startsWith("convertXmlValueResourcesFor")
 }.configureEach {
     mustRunAfter(rootProject.tasks.named("renameTemplate"))
 }
@@ -104,7 +109,8 @@ project('shared').tasks.named { taskName ->
     }
 }
 
-task renameTemplate(type: Copy) {
+
+tasks.register('renameTemplate', Copy) {
     dependsOn(renameIOSProject)
 
     into(rootDir)
@@ -212,10 +218,13 @@ task renameTemplate(type: Copy) {
         delete("$rootDir/shared/src/commonMain/sqldelight/$templateName")
         delete("$rootDir/shared/src/commonMain/graphql/$templateName")
 
-        exec {
+        def execOps = services.get(ExecOperations.class)
+
+        execOps.exec {
+            workingDir rootDir
             // After all setup changes happen, run a `git add` so
             // folks can just immediately commit and push if they wish.
-            commandLine "git", "add", "$rootDir/."
+            commandLine "git", "add", "." // Using relative path "." as workingDir is set
         }
     }
 
