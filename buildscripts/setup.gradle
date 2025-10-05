@@ -68,7 +68,8 @@ project('androidApp').tasks.named {
 project('desktopApp').tasks.named {
     // startsWith is used because this applies to multiple tasks,
     // like formatKotlinMain, formatKotlinTest, etc.
-    it.startsWith("formatKotlin")
+    // Similar to `copyNonXmlValueResourcesFor[...]` call.
+    it.startsWith("formatKotlin") || it.startsWith("copyNonXmlValueResources")
 }.configureEach {
     mustRunAfter(rootProject.tasks.named("renameTemplate"))
 }
