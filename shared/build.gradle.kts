@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.apollo.graphql)
     alias(libs.plugins.cash.sqldelight)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.google.devtools.ksp)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlinx.serialization)
