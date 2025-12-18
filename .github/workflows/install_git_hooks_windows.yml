@@ -15,7 +15,7 @@ jobs:
   install-windows-hooks:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Set Up JDK
         uses: actions/setup-java@v5
