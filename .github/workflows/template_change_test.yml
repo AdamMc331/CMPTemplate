@@ -20,7 +20,7 @@ jobs:
 
     runs-on: macos-14
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Set useSqldelight
         run: |
@@ -69,7 +69,7 @@ jobs:
         run: ./gradlew :desktopApp:build
 
       - name: IOS Build
-        uses: sersoft-gmbh/xcodebuild-action@v3
+        uses: sersoft-gmbh/xcodebuild-action@v4
         with:
           project: iosApp/myIOS.xcodeproj
           scheme: myIOS
