@@ -110,6 +110,8 @@ def tasksToExclude = [
         "packageRelease",
         "parseDebug",
         "parseRelease",
+        "mergeDebug",
+        "mergeRelease",
 ]
 
 project('shared').tasks.named { taskName ->
