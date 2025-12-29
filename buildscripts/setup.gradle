@@ -102,6 +102,10 @@ def tasksToExclude = [
         "generateDebug",
         "compileDebug",
         "checkDebug",
+        "processRelease",
+        "generateRelease",
+        "compileRelease",
+        "checkRelease",
 ]
 
 project('shared').tasks.named { taskName ->
