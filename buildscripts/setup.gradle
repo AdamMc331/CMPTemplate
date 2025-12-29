@@ -97,10 +97,9 @@ def tasksToExclude = [
         "generateResourceAccessors",
         "generateServiceApolloSources",
         "prepareComposeResourcesTask",
-        "processDebugManifest",
+        "processDebug",
         "extractDeepLinksDebug",
-        "processDebugAndroidTestManifest",
-        "generateDebugAndroidTestResources",
+        "generateDebug",
 ]
 
 project('shared').tasks.named { taskName ->
