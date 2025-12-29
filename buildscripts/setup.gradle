@@ -100,6 +100,7 @@ def tasksToExclude = [
         "processDebug",
         "extractDeepLinksDebug",
         "generateDebug",
+        "compileDebug",
 ]
 
 project('shared').tasks.named { taskName ->
