@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.android.application).apply(false)
     alias(libs.plugins.android.kmp.library).apply(false)
     alias(libs.plugins.apollo.graphql).apply(false)
-    alias(libs.plugins.benmanes.versions).apply(false)
     alias(libs.plugins.cash.sqldelight).apply(false)
     alias(libs.plugins.compose.compiler).apply(false)
     alias(libs.plugins.detekt).apply(true) // Needs to be applied at the root, unlike others.
@@ -15,7 +14,6 @@ plugins {
 
 apply(from = "buildscripts/githooks.gradle")
 apply(from = "buildscripts/setup.gradle")
-apply(from = "buildscripts/versionsplugin.gradle")
 
 subprojects {
     apply(from = "../buildscripts/detekt.gradle")
