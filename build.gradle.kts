@@ -9,7 +9,6 @@ plugins {
     alias(libs.plugins.compose.compiler).apply(false)
     alias(libs.plugins.detekt).apply(true) // Needs to be applied at the root, unlike others.
     alias(libs.plugins.google.devtools.ksp).apply(false)
-    alias(libs.plugins.kotlin.android).apply(false)
     alias(libs.plugins.kotlin.multiplatform).apply(false)
     alias(libs.plugins.kotlinter).apply(false)
 }
