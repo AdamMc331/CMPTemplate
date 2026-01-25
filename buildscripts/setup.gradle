@@ -97,6 +97,23 @@ def tasksToExclude = [
         "generateResourceAccessors",
         "generateServiceApolloSources",
         "prepareComposeResourcesTask",
+        "extractDeepLinksDebug",
+        "generateDebug",
+        "generateRelease",
+        "compileDebug",
+        "compileRelease",
+        "checkDebug",
+        "checkRelease",
+        "processDebug",
+        "processRelease",
+        "packageDebug",
+        "packageRelease",
+        "parseDebug",
+        "parseRelease",
+        "mergeDebug",
+        "mergeRelease",
+        "mapDebug",
+        "mapRelease",
 ]
 
 project('shared').tasks.named { taskName ->
