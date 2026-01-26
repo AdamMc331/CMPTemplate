@@ -1,6 +1,6 @@
 [versions]
 activityCompose = "1.12.2"
-agp = "8.13.2"
+agp = "9.0.0"
 androidxLifecycle = "2.9.6"
 androidxTest = "1.3.0"
 apollo = "4.4.0"
@@ -11,12 +11,11 @@ coroutines = "1.10.2"
 datastore = "1.2.0"
 detektGradlePlugin = "1.23.8"
 espresso = "3.7.0"
-gradleVersionsPlugin = "0.53.0"
 junit = "4.13.2"
 kmpCompose = "1.10.0"
 koin = "4.1.1"
 kotlin = "2.3.0"
-kotlinter = "5.3.0"
+kotlinter = "5.4.0"
 kotlinxDatetime = "0.7.1-0.6.x-compat"
 ksp = "2.3.4"
 ktor = "3.4.0"
@@ -64,13 +63,11 @@ square-leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", ver
 [plugins]
 apollo-graphql = { id = "com.apollographql.apollo", version.ref = "apollo" }
 android-application = { id = "com.android.application", version.ref = "agp" }
-android-library = { id = "com.android.library", version.ref = "agp" }
-benmanes-versions = { id = "com.github.ben-manes.versions", version.ref = "gradleVersionsPlugin" }
+android-kmp-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 cash-sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektGradlePlugin" }
 google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.compose", version.ref = "kmpCompose" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

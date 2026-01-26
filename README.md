@@ -36,8 +36,7 @@ The dependencies in the template include:
 
 * [Ktlint](/documentation/StaticAnalysis.md) for formatting.
 * [Detekt](/documentation/StaticAnalysis.md) for code smells.
-* [Git Hooks](/documentation/GitHooks.md) for automatically perform static analysis checks. 
-* [Gradle Versions Plugin](/documentation/VersionsPlugin.md) for checking all dependencies for new versions.
+* [Git Hooks](/documentation/GitHooks.md) for automatically perform static analysis checks.
 * [GitHub Actions](/documentation/GitHubActions.md) for running continuous integration and ensuring code quality with every PR.
 * [LeakCanary](https://square.github.io/leakcanary/) for detecting memory leaks.
 * [SQLDelight](https://cashapp.github.io/sqldelight/2.0.2/multiplatform_sqlite/) for local databases, which can be removed via setup.gradle if necessary.
