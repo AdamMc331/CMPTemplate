@@ -22,6 +22,7 @@ ksp = "2.3.5"
 ktor = "3.4.0"
 leakCanary = "2.14"
 material = "1.13.0"
+materialIconsExtended = "1.7.3"
 material3Adaptive = "1.2.0"
 minSdk = "23"
 sqldelight = "2.2.1"
@@ -51,6 +52,7 @@ google-testparameterinjector = { module = "com.google.testparameterinjector:test
 jetbrains-compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "kmpCompose" }
 jetbrains-compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "kmpCompose" }
 jetbrains-compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "kmpComposeMaterial3" }
+jetbrains-compose-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 jetbrains-compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "kmpCompose" }
 jetbrains-compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "kmpCompose" }
 jetbrains-compose-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "kmpCompose" }
