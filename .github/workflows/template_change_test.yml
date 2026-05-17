@@ -18,7 +18,7 @@ jobs:
       matrix:
         keepCustomizableDependencies: [true, false]
 
-    runs-on: macos-14
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@v6
 
@@ -73,7 +73,7 @@ jobs:
         with:
           project: iosApp/myIOS.xcodeproj
           scheme: myIOS
-          destination: name=iPhone 8
+          destination: name=iPhone 17
           sdk: iphoneos
           configuration: Debug
           action: build
