@@ -21,7 +21,7 @@ jobs:
           java-version-file: .github/.java-version
 
       - name: Run tests
-        run: ./gradlew :shared:iosX64Test
+        run: ./gradlew :shared:iosArm64Test
 
       - name: Build
         uses: sersoft-gmbh/xcodebuild-action@v4
