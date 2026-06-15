@@ -11,4 +11,5 @@ ktlint_function_signature_rule_force_multiline_when_parameter_count_greater_or_e
 ktlint_standard_function-expression-body = disabled
 ktlint_standard_function-signature = disabled
 ktlint_standard_multiline-expression-wrapping = disabled
+ktlint_standard_no-unused-imports = enabled
 ktlint_standard_string-template-indent = disabled
