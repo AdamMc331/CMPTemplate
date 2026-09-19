@@ -25,7 +25,7 @@ material = "1.14.0"
 materialIconsExtended = "1.7.3"
 material3Adaptive = "1.2.0"
 minSdk = "23"
-sqldelight = "2.3.2"
+sqldelight = "2.4.0"
 testParameterInjector = "1.22"
 
 [libraries]
