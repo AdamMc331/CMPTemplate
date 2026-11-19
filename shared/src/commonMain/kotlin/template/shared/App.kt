@@ -3,6 +3,7 @@ package template.shared
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -29,7 +30,9 @@ fun App() {
         Surface {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .statusBarsPadding()
+                    .fillMaxWidth(),
             ) {
                 Button(
                     onClick = {
